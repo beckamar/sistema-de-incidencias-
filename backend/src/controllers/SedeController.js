@@ -1,5 +1,5 @@
 import { getCentroTrabajoService, getSubcentroService } from '../models/SedeModel.js';
-import handleResponse from '../utils/responseHandler.js';
+import handleResponse from '../middlewares/responseHandler.js';
 
 
 

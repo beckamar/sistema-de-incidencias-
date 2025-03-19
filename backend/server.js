@@ -5,10 +5,10 @@ import cors from "cors";
 import pool from "./src/config/db.js";
 import empleadosRoutes from "./src/routes/empleadoRoutes.js";
 import incidentesRoutes from "./src/routes/incidenteRoute.js";
-import authRoutes from "./src/routes/authRoutes.js";
+import loginRoutes from "./src/routes/loginRoutes.js";
 import errorHandling from "./src/middlewares/errorHandler.js";
-import rolRoutes from "./src/routes/rolRoutes.js"
-
+import rolRoute from "./src/routes/rolRoute.js"
+import sedeRoute from "./src/routes/SedeRoutes.js"
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -18,10 +18,11 @@ app.use(express.json());
 app.use(cors());
 
 //Routes
+app.use("/api", rolRoute);
+app.use("/api", sedeRoute);
 app.use("/api", empleadosRoutes);
 app.use("/api", incidentesRoutes);
-app.use("/api", authRoutes);
-app.use("/api", rolRoutes);
+app.use("/api", loginRoutes);
 
 
 //Error handling Middelware

@@ -1,73 +1,73 @@
-import React, { useState } from "react";
-import Dropdown from "../../components/Dropdown";               
+import React, { useEffect, useMemo, useState } from "react";
+import Dropdown from "../../components/Dropdown";       
+import { getCentrotrabajo, getRoles, getSubcentro } from "../../utils/networkData";        
 
 const Login = () => {
 
-    const [rolState, set_rolState] = useState("");
-    const [centroTrabajoState, set_centroTrabajoState] = useState("");
-    const [subcentroState, set_subcentroState] = useState("");
+    const [rolState, set_rolState] = useState([]);
+    const [selectedRolId, setSelectedRolId] = useState(null);
+
+    const [centroTrabajoState, set_centroTrabajoState] = useState([]);
+    const [selectedIdCentro, setSelectedIdCentro] = useState([null]);
+
+    const [subcentroState, set_subcentroState] = useState([]);
+
+    useEffect(() => {
+        getRoles().then((response) => {
+            set_rolState(response.data); 
+        });
+    }, []);
+
+    
 
 
-
-    const roles = [
-        { value: "superintendente", label: "Superintendente" },
-        { value: "jefe", label: "Jefe zona/agencia" },
-        { value: "empleado", label: "Empleado" },
-    ];
-
-    const centrosTrabajo = [
-        { value: "centro1", label: "Centro de Trabajo 1" },
-        { value: "centro2", label: "Centro de Trabajo 2" },
-        { value: "centro3", label: "Centro de Trabajo 3" },
-    ];
-
-    const subcentrosTrabajo = [
-        { value: "subcentro1", label: "Subcentro de Trabajo 1" },
-        { value: "subcentro2", label: "Subcentro de Trabajo 2" },
-        { value: "subcentro3", label: "Subcentro de Trabajo 3" },
-    ];
+    const selectedRol = rolState.find((rol) => rol.id_rol === selectedRolId);
+    const selectedCentro = centroTrabajoState.find((centroTrabajo) => centroTrabajo.id_centrotrabajo === selectedIdCentro);
+    const dropdownsAdicionales = selectedRol?.nombre_rol === "Jefe zona/agencia" || selectedRol?.nombre_rol === "Empleado";
 
 
     return(
-        <div className="h-screen bg-green-100 overflow-hidden relative">
+        <div className="h-screen bg-white overflow-hidden relative">
             <div className="container h-screen flex items-center justify-center px-20 mx-auto">
-                <div className="">
+                <div className="w-full max-w-md md:max-w-lg lg:max-w-xl">
                     <div>
                         <h4 className="text-2xl font-semibold mb-7">Gestion de incidencias</h4>
                     </div>
 
                     <div className="">
-
-                        <form onSubmit={() => {}}>
-
+                    <form onSubmit={() => {}} >
+                        <div className="mb-4">
+                            <Dropdown
+                                label="Rol"
+                                options={rolState}
+                                selected={selectedRol?.nombre_rol}
+                                onSelect={(selectedRolId) => setSelectedRolId(selectedRolId)}
+                            />
+                        </div>
+                        {dropdownsAdicionales &&(
                             <div className="mb-4">
                                 <Dropdown
-                                    label="Selecciona un rol"
-                                    options={roles}
-                                    selected={rolState}
-                                    onSelect={set_rolState}
+                                    label="Centro de trabajo"
+                                    options={centroTrabajoState}
+                                    selected={selectedCentro?.nombre}
+                                    onSelect={(selectedIdCentro) => setSelectedIdCentro(selectedIdCentro)}
+
                                 />
                             </div>
-
+                        )}
+                        {dropdownsAdicionales && (
                             <div className="mb-4">
                                 <Dropdown
-                                    label="Selecciona un centro de trabajo"
-                                    options={centrosTrabajo}
-                                    selected={centroTrabajoState}
-                                    onSelect={set_centroTrabajoState}
+                                    label="Zona/Agencia"
+                                    options={subcentroState}
+                                    selected={subcentroState.find((subcentro) => subcentro.isSelected)}
+                                    onSelect={(selectedSubcentro) => set_subcentroState(selectedSubcentro)}
                                 />
                             </div>
+                        )}
 
-                            <div className="mb-4">
-                                <Dropdown
-                                    label="Selecciona un subcentro de trabajo"
-                                    options={subcentrosTrabajo}
-                                    selected={subcentroState}
-                                    onSelect={set_subcentroState}
-                                />
-                            </div>
-
-                        </form>
+                        <button type="submit"className="btn-primary">INGRESAR</button>
+                    </form>
                     </div>
                 </div>
             </div>
