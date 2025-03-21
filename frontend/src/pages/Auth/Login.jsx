@@ -1,29 +1,52 @@
-import React, { useEffect, useMemo, useState } from "react";
-import Dropdown from "../../components/Dropdown";       
-import { getCentrotrabajo, getRoles, getSubcentro } from "../../utils/networkData";        
+import React, { useEffect, useState } from "react";
+import { getCentrostrabajo, getRoles, getSubcentros} from "../../utils/networkData";        
 
 const Login = () => {
 
     const [rolState, set_rolState] = useState([]);
-    const [selectedRolId, setSelectedRolId] = useState(null);
-
     const [centroTrabajoState, set_centroTrabajoState] = useState([]);
-    const [selectedIdCentro, setSelectedIdCentro] = useState([null]);
-
     const [subcentroState, set_subcentroState] = useState([]);
 
     useEffect(() => {
-        getRoles().then((response) => {
-            set_rolState(response.data); 
-        });
+        const fetchRoles = async () => {
+            const { error, data } = await getRoles(); 
+            if (!error) {
+                set_rolState(data);
+            } else {
+                console.error(data);
+            }
+        };
+        fetchRoles();
     }, []);
 
-    
 
+    const onRolChange = async (event) => {
+        const selectedRoleId = event.target.value; 
+        console.log("ID del ROl seleccionado para obtener centros: ", selectedRoleId);
+        const { error, data } = await getCentrostrabajo(selectedRoleId); 
+        if (!error) {
+            set_centroTrabajoState(data); 
+        } else {
+            console.error(data); 
+        }
+    };
 
-    const selectedRol = rolState.find((rol) => rol.id_rol === selectedRolId);
-    const selectedCentro = centroTrabajoState.find((centroTrabajo) => centroTrabajo.id_centrotrabajo === selectedIdCentro);
-    const dropdownsAdicionales = selectedRol?.nombre_rol === "Jefe zona/agencia" || selectedRol?.nombre_rol === "Empleado";
+    const onCentroChange = async (event) => {
+        //const selectedCentroId = event.target.value;  
+        const selectedCentroId = event.target.value;  
+        console.log("ID del Centro seleccionado para obtener subcentros: ", selectedCentroId);
+
+        const { error, data } = await getSubcentros(selectedCentroId); 
+        if (!error) {
+            console.log("Subcentros recibidos: ", data);
+            set_subcentroState(data); 
+        } else {
+            console.error(data); 
+        }
+    };
+    console.log("entros de trabajo state: ", centroTrabajoState);
+
+    console.log("SubCentros de trabajo state: ", subcentroState);
 
 
     return(
@@ -34,40 +57,45 @@ const Login = () => {
                         <h4 className="text-2xl font-semibold mb-7">Gestion de incidencias</h4>
                     </div>
 
-                    <div className="">
-                    <form onSubmit={() => {}} >
-                        <div className="mb-4">
-                            <Dropdown
-                                label="Rol"
-                                options={rolState}
-                                selected={selectedRol?.nombre_rol}
-                                onSelect={(selectedRolId) => setSelectedRolId(selectedRolId)}
-                            />
+                    <div className="FormBox">
+                        <div>
+                            <div>
+                                <select className="custom-select inline-flex w-full h-10 items-center justify-between rounded-md bg-white px-3 py-2 text-sm font-normal text-gray-600 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50" onChange={(event)=>{onRolChange(event)}}>
+                                    <option >Selecciona un rol</option>{
+                                        rolState.map((item)=>{
+                                            return (<option value={item.id}>
+                                                {item.nombre}
+                                            </option>)
+                                        })
+                                    }
+                                </select>
+                            </div>
+
+                            <div>
+                                <select className="custom-select inline-flex w-full h-10 items-center justify-between rounded-md bg-white px-3 py-2 text-sm font-normal text-gray-600 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50" onChange={(event)=>{onCentroChange(event)}}>
+                                    <option >Selecciona un Centro</option>{
+                                        centroTrabajoState.map((item)=>{
+                                            return (<option value={item.id}>
+                                                {item.nombre}
+                                            </option>)
+                                        })
+                                    }
+                                </select>
+                            </div>
+
+                            <div>
+                                <select className="custom-select inline-flex w-full h-10 items-center justify-between rounded-md bg-white px-3 py-2 text-sm font-normal text-gray-600 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50">
+                                    <option >Selecciona una area/agencia</option>{
+                                        subcentroState.map((item)=>{
+                                            return (<option value={item.id}>
+                                                {item.nombre}
+                                            </option>)
+                                        })
+                                    }
+                                </select>
+                            </div>
                         </div>
-                        {dropdownsAdicionales &&(
-                            <div className="mb-4">
-                                <Dropdown
-                                    label="Centro de trabajo"
-                                    options={centroTrabajoState}
-                                    selected={selectedCentro?.nombre}
-                                    onSelect={(selectedIdCentro) => setSelectedIdCentro(selectedIdCentro)}
-
-                                />
-                            </div>
-                        )}
-                        {dropdownsAdicionales && (
-                            <div className="mb-4">
-                                <Dropdown
-                                    label="Zona/Agencia"
-                                    options={subcentroState}
-                                    selected={subcentroState.find((subcentro) => subcentro.isSelected)}
-                                    onSelect={(selectedSubcentro) => set_subcentroState(selectedSubcentro)}
-                                />
-                            </div>
-                        )}
-
                         <button type="submit"className="btn-primary">INGRESAR</button>
-                    </form>
                     </div>
                 </div>
             </div>

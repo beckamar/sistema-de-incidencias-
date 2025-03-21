@@ -1,9 +1,10 @@
 import express from "express";
-import { getCentroTrabajo, getSubcentro } from "../controllers/SedeController.js";
+import { getIdCentroTrabajo } from "../controllers/sede/centroController.js";
+import { getIdSubcentros } from "../controllers/sede/subcentroController.js";
 
 const router = express.Router();
 
-router.get("/sedeRout/centrotrabajo", getCentroTrabajo);
-router.get("/sedeRout/subcentro", getSubcentro);
+router.get("/:id_rol/centros", getIdCentroTrabajo);
+router.get("/centros/:id_centro/subcentro", getIdSubcentros);
 
 export default router;

@@ -10,18 +10,20 @@ async function getRoles() {
     }
 }
 
-async function getCentrotrabajo() {
+async function getCentrostrabajo(id_rol) {
     try {
-        const response = await axiosInstance.get("/api/sedeRout/centrotrabajo")
-        return { error: false, data: response};
+        console.log("EL id de id_rol:", id_rol);
+        const response = await axiosInstance.get(`/api/${id_rol}/centros`);
+        return { error: false, data: response.data.data};
     } catch ( error ) {  
         return { error: true, data: error.response?.data?.msg || "Error al obtener centros de trabajo" };    }
 }
 
-async function getSubcentro() {
+async function getSubcentros(id_centro) {
     try {
-        const response = await axiosInstance.get("/api/sedeRout/subcentro")
-        return { error: false, data: response.data };
+        const response = await axiosInstance.get(`/api/centros/${id_centro}/subcentro`);
+        console.log("EL de id_centro: ", id_centro);
+        return { error: false, data: response.data.data };
     } catch ( error ) {  
         return { error: true, data: error.response?.data?.msg || "Error al obtener subcentros" };    }
 }
@@ -41,6 +43,6 @@ async function login(rol, centrotrabajo, subcentro) {
 
 export {
     getRoles,
-    getCentrotrabajo,
-    getSubcentro,
+    getCentrostrabajo,
+    getSubcentros,
 };
