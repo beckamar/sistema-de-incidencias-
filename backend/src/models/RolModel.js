@@ -6,8 +6,8 @@ export const getRolService = async() => {
    return result.rows;
 };
 
-export const getRolPermisoService = async() => {
-   const result = await pool.query('SELECT rolp. *, r.nombre_rol FROM rol_permisos rolp INNER JOIN rol r ON rolp.id_rol = r.id_rol');
-   return result.rows;
+export const getRolPermisoService = async(rol_id) => {
+   const result = await pool.query('SELECT permisos FROM rol WHERE id = $1;', [rol_id]);
+   return result.rows[0].permisos;
 };
 

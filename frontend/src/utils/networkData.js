@@ -35,7 +35,7 @@ async function login(rol, centrotrabajo, subcentro) {
             centrotrabajo,
             subcentro,
         });
-        return { error: false, data: response.data };
+        return { error: false, data: response.data, redirectTo: response.data.data.redirectTo };
     } catch (error) {
         return { error: true, data: error.response?.data?.msg || "Error al iniciar sesión" };    }
     
@@ -45,4 +45,5 @@ export {
     getRoles,
     getCentrostrabajo,
     getSubcentros,
+    login
 };
