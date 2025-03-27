@@ -1,58 +1,25 @@
-import { useState, useEffect } from "react";
-import { getCentrostrabajo, getRoles, getSubcentros, login } from "../../utils/networkData.js";        
+import { useCallback } from "react";
+import { getCentrostrabajo,getRoles, getSubcentros, login } from "../../utils/networkData.js";   
+import useFetchData from "../useFetchData.js";
+
 
 const useLoginData = () => {
-    const [roles, setRoles] = useState([]);
-    const [centros, setCentros] = useState([]);
-    const [subcentros, setSubcentros] = useState([]);
-    const [error, setError] = useState(null);
+    const {data: roles, error: rolesError } = useFetchData(getRoles);
+    const {data: centros, error: centrosError, fetchData: fetchCentros} = useFetchData(getCentrostrabajo, [], false);
+    const {data: subcentros, error: subcentrosError, fetchData: fetchSubcentros} = useFetchData(getSubcentros, [], false);
 
-
-    useEffect(() => {
-        const loadRoles = async () => {
-            const { error, data } = await getRoles();
-            if (!error) setRoles(data);
-        };
-        loadRoles();
-    }, []);
-
-    const fetchCentros = async (rolId) => {
-        setCentros([]); 
-        setSubcentros([]); 
-        const { error, data } = await getCentrostrabajo(rolId);
-        if (!error) setCentros(data);
-    };
-
-    const fetchSubcentros = async (centroId) => {
-        setSubcentros([]);
-        const { error, data } = await getSubcentros(centroId);
-        if (!error) setSubcentros(data);
-    };
-
-    const fetchSubmit = async (selectedRol) =>{
+    const fetchSubmit = useCallback (async (selectedRol, selectedCentro, selectedSubcentros) => {
         try {
-            const {error: apiError, data} = await login(selectedRol);
-           
-            console.log("Datos procesados:", {
-                apiError,
-                userData: data?.userData,
-                rawData: data
-            });
+            const {error:apiError, data } = await login(selectedRol, selectedCentro, selectedSubcentros);
 
-            if (apiError || !data?.userData) {
-                setError(apiError ? data : "Estructura de respuesta inválida");
-                return { success: false };
+            if(apiError || !data?.userData){
+                throw new Error (apiError ? data : "Estrcutura de respuesta invalida"); 
             }
-
             return {success: true, userData: data.userData};
         } catch (error) {
-            setError("Error de conexion");
-            return {success:false}; 
+            return {success: false, error: "Error de conexion"};
         }
-    };
-
-
-    return { roles, centros, subcentros, fetchCentros, fetchSubcentros, fetchSubmit };
+    }, []);
+    return {roles, rolesError, centros, centrosError, subcentros, subcentrosError,  fetchCentros, fetchSubcentros, fetchSubmit };
 };
-
 export default useLoginData;

@@ -1,10 +1,11 @@
 import React from "react";
 
 
-const Reporte = () => {
+const Reporte = (tiposIncidentes, handleTiposIncidentes) => {
 
     return (
-        <div >HOLA REPORTE</div>
+        <div >HOLA REPORTE 
+        </div>
     );
 };
 

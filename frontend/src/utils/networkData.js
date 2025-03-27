@@ -39,9 +39,13 @@ async function login(idRol) {
             data: response.data.data
         };
     } catch (error) {
-        return { error: true, data: error.response?.data?.msg || "Error al iniciar sesión" };    }
-    
+        return { error: true, data: error.response?.data?.msg || "Error al iniciar sesión" };    
+    }  
 }
+
+async function getTiposIncidentes(){}
+
+async function postNuevoReporte(idTipoIncidente){}
 
 export {
     getRoles,
