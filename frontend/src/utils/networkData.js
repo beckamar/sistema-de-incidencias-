@@ -28,14 +28,16 @@ async function getSubcentros(id_centro) {
         return { error: true, data: error.response?.data?.msg || "Error al obtener subcentros" };    }
 }
 
-async function login(rol, centrotrabajo, subcentro) {
+async function login(idRol) {
     try {
-        const response = await axiosInstance.post("/api/login", {
-            rol,
-            centrotrabajo,
-            subcentro,
-        });
-        return { error: false, data: response.data, redirectTo: response.data.data.redirectTo };
+        console.log("id enviado al back:", idRol);
+        const response = await axiosInstance.post("/api/login", {id_rol: idRol});
+        console.log("datos recividos del backend:", response.data);
+
+        return {
+            error: false,
+            data: response.data.data
+        };
     } catch (error) {
         return { error: true, data: error.response?.data?.msg || "Error al iniciar sesión" };    }
     

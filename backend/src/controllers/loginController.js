@@ -8,14 +8,14 @@ const MSG = {
 
 export const login = async(req, res) =>{
     try {
-        const { rol, centro, subcentro } = req.body;
+        const { id_rol} = req.body;
 
-        const permisos = await getRolPermisoService(rol.id);
-        handleResponse(res, 200, MSG.loginExitoso, {userData: {rol: {id: rol.id, nombre: rol.nombre },
-                centro: centro?.id || null,
-                subcentro: subcentro?.id || null,
+        const permisos = await getRolPermisoService(id_rol);
+        handleResponse(res, 200, MSG.loginExitoso,  {
+            userData: { 
+                rol: { id: id_rol },
                 permisos
-            }
+            },
         });
 
     } catch (error) {

@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import React from 'react'
 import Login from "./pages/Auth/Login";
 import Reporte from './pages/Reporte';
+import Admin from './pages/Admin';
 
      
 function App() {
@@ -11,7 +12,8 @@ function App() {
       <Router>
         <Routes>
           <Route path='/login' exact element={<Login/>}/>
-          <Route path='/reportes' exact element={<Reporte/>}/>
+          <Route path='/admin' exact element={<Admin/>}/>
+          <Route path='/reporte' exact element={<Reporte/>}/>
         </Routes> 
       </Router>
 
