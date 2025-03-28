@@ -8,6 +8,7 @@ export const useLoginForm = () => {
     const [selectedRol, setSelectedRol] = useState(null);
     const [selectedCentro, setSelectedCentro] = useState(null);
     const [selectedSubcentro, setSelectedSubcentro] = useState(null);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
 
@@ -32,21 +33,33 @@ export const useLoginForm = () => {
         setSelectedSubcentro(e.target.value);
     };
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(null);
 
-        const { success, userData} = await fetchSubmit(selectedRol, selectedCentro, selectedSubcentro);
-        if (!success || !userData?.permisos) {
-            console.error("Fallo en login o permisos faltantes");
-            return;
-        }
+        try {
+            const { success, userData} = await fetchSubmit(selectedRol, selectedCentro, selectedSubcentro);
+            if (!success || !userData?.permisos) {
+                throw new Error("Fallo en login o permisos faltantes");
+            }
+        
+            localStorage.setItem('userData', JSON.stringify(userData));
+            const requiereCentro = (userData.permisos.acceso_pantallas.includes('admin') && userData.permisos.ver_reportes.includes('asignados') )|| 
+                                    userData.permisos.ver_reportes.includes('ninguno');
     
-        localStorage.setItem('userData', JSON.stringify(userData));
-
-        if(userData.permisos.acceso_pantallas?.includes('admin')){
-            navigate('/admin', { replace: true });
-        }else{
-            navigate('/tipoincidente', { replace: true });
+            if(requiereCentro && !selectedCentro){
+                throw new Error("Campos incompletos");   
+            }
+            if(userData.permisos.acceso_pantallas.includes('admin') ){
+                navigate('/admin', { replace: true });  
+            }else{
+                navigate('/tipoincidente', { replace: true });
+            }
+            
+        } catch (err) {
+            setError(err.message);
+            
         }
     };
 
@@ -64,6 +77,7 @@ export const useLoginForm = () => {
         handleCentroChange,
         handleSubcentroChange,
         handleSubmit,
+        error
     };
 };
 

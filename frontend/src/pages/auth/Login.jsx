@@ -6,7 +6,7 @@ const Login = () => {
     const form = useLoginForm();
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-white">
+        <div >
             <LoginForm {...form} />
         </div>
     );

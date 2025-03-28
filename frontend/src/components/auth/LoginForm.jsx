@@ -1,5 +1,7 @@
 import React from 'react';
 import Dropdown from '../Dropdown';
+import logoCFE from '/src/assets/logoCFE.png'
+
 
 const LoginForm = ({ 
     roles, 
@@ -13,36 +15,56 @@ const LoginForm = ({
     handleSubmit,
     error 
 }) => (
-    <div className="w-full max-w-lg p-6 rounded-lg shadow-md md:w-3/4 lg:w-1/2 xl:w-1/3">
-        <h4 className="text-2xl font-semibold mb-4">Gestión de Incidencias</h4>
 
-        {error &&(
-            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>
-        )}
-        <form onSubmit={handleSubmit}>
-        <div className="flex flex-col gap-4">
-            <Dropdown label="Selecciona un rol" options={roles} onChange={handleRolChange} />
+    <div className='flex flex-col items-center justify-center min-h-screen'>
+        <img src={logoCFE} alt="Logo CFE" className="w-36 h-auto mt-6 mb-4 md:mt-8 md:mb-5" />
+
+        <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
+            <div className="flex flex-col p-8 md:p-14 text-center">
+
+                <span className="mb-2 text-xl font-semibold text-gray-600">Gestion de Incidencias</span>
+                <span className="font-normal text-xs text-gray-500 mb-10">Selecciona la información solicitada</span>
+
+                <div>
+                    
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                        <Dropdown 
+                            label="Selecciona un rol" 
+                            options={roles} 
+                            onChange={handleRolChange} 
+                        />
+                        {showCentros && (
+                        <Dropdown 
+                            label="Centro de Trabajo" 
+                            options={centros} 
+                            onChange={handleCentroChange} 
+                        />
+                        )}
+                    
+                        {showSubcentros && (
+                        <Dropdown 
+                            label="Área/Agencia" 
+                            options={subcentros} 
+                            onChange={handleSubcentroChange} 
+                        />
+                        )}
+                        {error && (
+                        <div className="mb-2 text-xs text-red-400">
+                            {error}
+                        </div>
+                        )}
+                        <button type="submit" className="btn-primary w-full mt-5 h-7 text-xs font-semibold flex items-center justify-center active:bg-green-400 transition-colors duration-200">
+                            INGRESAR
+                        </button>
+                    </form>
+
+                </div>
+            </div>
             
-            {showCentros && (
-                <Dropdown 
-                    label="Selecciona un Centro de Trabajo" 
-                    options={centros} 
-                    onChange={handleCentroChange} 
-                />
-            )}
-            
-            {showSubcentros && (
-                <Dropdown 
-                    label="Selecciona una Área/Agencia" 
-                    options={subcentros} 
-                    onChange={handleSubcentroChange} 
-                />
-            )}
         </div>
-        <button type="submit" className="btn-primary w-full mt-4">INGRESAR</button>
-        </form>
-
     </div>
+
+
 );
 
 export default LoginForm;
