@@ -1,8 +1,7 @@
 //Response function
 
-import { actualizarIncidenteService, crearIncidenteService, getIncidenteIdService, getIncidentesService } from "../models/incidenteModel.js";
+import { actualizarIncidenteService, crearIncidenteService, getIncidenteIdService, getIncidentesService, getTiposIncidentesService } from "../models/incidenteModel.js";
 import handleResponse from '../middlewares/responseHandler.js';
-import { incidenteContext } from "../strategies/incidenteContext.js";
 
 
 export const crearIncidente = async (req, res, next) => {
@@ -12,8 +11,6 @@ export const crearIncidente = async (req, res, next) => {
 
         const nuevoIncidente = await crearIncidenteService (id_catincidentes, id_subcentro, id_centrotrabajo);
 
-        const contexto = new incidenteContext(id_catincidentes);
-        await contexto.crearIncidente({id_incidente: nuevoIncidente.id_incidente, ...datosEspecificos});
         handleResponse(res, 201, "Incidente creado",nuevoIncidente);
     }catch(err){
         next(err);
@@ -48,4 +45,13 @@ export const actualizarIncidente = async (req, res, next) => {
     } catch (error) {
         next(err);
     }
-}
+};
+
+export const getTiposIncidentes = async (req, res, next) => {
+    try {
+        const tiposIncidentes = await getTiposIncidentesService();
+        handleResponse(res, 200, "Tipo de incidentes obtenidos",tiposIncidentes);
+    } catch (error) {
+        next(err);
+    }
+};

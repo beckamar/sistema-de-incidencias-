@@ -43,7 +43,14 @@ async function login(idRol) {
     }  
 }
 
-async function getTiposIncidentes(){}
+async function getTiposIncidentes(){
+    try {
+        const response = await axiosInstance.get("/api/incidente/tipos");
+        return { error: false, data: response.data.data };
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al obtener los tipos de incidentes"};        
+    }
+}
 
 async function postNuevoReporte(idTipoIncidente){}
 
@@ -51,5 +58,6 @@ export {
     getRoles,
     getCentrostrabajo,
     getSubcentros,
-    login
+    login,
+    getTiposIncidentes
 };

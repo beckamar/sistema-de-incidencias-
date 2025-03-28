@@ -7,7 +7,7 @@ const Dropdown = ({ label, options, onChange }) => {
                 className="custom-select inline-flex w-full h-10 items-center justify-between rounded-md bg-white px-3 py-2 text-sm font-normal text-gray-600 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50"
                 onChange={onChange}
             >
-                <option>Selecciona un {label}</option>
+                <option>{label}</option>
                 {options.map((item) => (
                     <option key={item.id} value={item.id}>
                         {item.nombre}

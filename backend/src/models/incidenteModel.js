@@ -19,7 +19,7 @@ export const getIncidentesService = async () =>  {
 };
 
 export const getIncidenteIdService = async (id) =>  {
-    const result = await pool.query('SELECT * FROM incidente WHERE id = $1', [id]);
+    const result = await pool.query('SELECT * FROM incidente WHERE id_incidente = $1', [id]);
     return result.rows[0];
 };
 
@@ -39,4 +39,15 @@ export const crearIncidenteService = async (tipo_incidente,centrotrabajo, subcen
 export const actualizarIncidenteService = async (id, estado) =>  {
     const result = await pool.query('UPDATE incidente SET estado = $1 WHERE id=$2 RETURNING *',[id, estado]);
         return result.rows[0];
+};
+
+
+export const getTiposIncidentesService = async () => {
+    const result = await pool.query(`SELECT
+        id_catincidentes,
+        tipo
+        FROM
+        catalogo_incidentes;
+    `);
+    return result.rows;
 };

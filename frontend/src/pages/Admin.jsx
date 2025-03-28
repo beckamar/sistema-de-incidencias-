@@ -4,7 +4,7 @@ import React from "react";
 const Admin = () => {
 
     return (
-        <div >HOLA ADMIN</div>
+        <div>HOLAAAA ADMIN</div>
     );
 };
 
