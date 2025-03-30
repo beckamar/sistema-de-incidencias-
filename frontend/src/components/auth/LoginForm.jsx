@@ -17,17 +17,17 @@ const LoginForm = ({
 }) => (
 
     <div className='flex flex-col items-center justify-center min-h-screen'>
-        <img src={logoCFE} alt="Logo CFE" className="w-36 h-auto mt-6 mb-4 md:mt-8 md:mb-5" />
+        <img src={logoCFE} alt="Logo CFE" className="w-36 h-auto mt-6 mb-4 md:w-48 md:mt-8 md:mb-5 lg:w-56 lg:mt-10 lg:mb-6" />
 
-        <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
-            <div className="flex flex-col p-8 md:p-14 text-center">
+        <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 md:w-3/4 lg:w-1/2 xl:w-1/3">
+            <div className="flex flex-col p-8 md:p-14 text-center w-full">
 
-                <span className="mb-2 text-xl font-semibold text-gray-600">Gestion de Incidencias</span>
-                <span className="font-normal text-xs text-gray-500 mb-10">Selecciona la información solicitada</span>
+                <span className="mb-2 text-xl font-semibold text-gray-600 md:text-2xl lg:text-3xl">Gestion de Incidencias</span>
+                <span className="font-normal text-xs text-gray-500 mb-10 md:text-sm lg:text-base">Selecciona la información solicitada</span>
 
                 <div>
                     
-                    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">
                         <Dropdown 
                             label="Selecciona un rol" 
                             options={roles} 
@@ -49,11 +49,11 @@ const LoginForm = ({
                         />
                         )}
                         {error && (
-                        <div className="mb-2 text-xs text-red-400">
+                        <div className="mb-2 text-xs text-red-400 md:text-sm lg:text-base">
                             {error}
                         </div>
                         )}
-                        <button type="submit" className="btn-primary w-full mt-5 h-7 text-xs font-semibold flex items-center justify-center active:bg-green-400 transition-colors duration-200">
+                        <button type="submit" className="btn-primary w-full mt-5 h-7 text-xs font-semibold flex items-center justify-center active:bg-green-400 transition-colors duration-200 md:h-10 md:text-sm lg:h-12 lg:text-base">
                             INGRESAR
                         </button>
                     </form>
