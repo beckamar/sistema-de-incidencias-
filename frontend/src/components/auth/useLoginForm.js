@@ -18,6 +18,7 @@ export const useLoginForm = () => {
         setSelectedRol(rolId);
         setSelectedCentro(null);
         setSelectedSubcentro(null);
+        setError(null);
         if (rolId !== "1") {
             fetchCentros(rolId);
         }
@@ -26,11 +27,13 @@ export const useLoginForm = () => {
     const handleCentroChange = (e) => {
         const centroId = e.target.value;
         setSelectedCentro(centroId);
+        setError(null);
         fetchSubcentros(centroId);
     };
 
     const handleSubcentroChange = (e) => {
         setSelectedSubcentro(e.target.value);
+        setError(null);
     };
 
 
