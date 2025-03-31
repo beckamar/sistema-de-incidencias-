@@ -10,7 +10,7 @@ const TiposIncidentesForm = ({opcionesIncidentes, handleTipoIncidenteChange, han
     return(
         <div className="relative min-h-screen w-full flex flex-col">
 
-            <Header onBack={handleBackLogin} label="Reporte"/>
+            <Header onBack={handleBackLogin}/>
 
             <main className="flex-1 flex flex-col items-center px-8 sm:px-6 md:px-10 pt-10 sm:pt-16 md:pt-40 pb-8">
                 <div className="relative flex flex-col items-center mb-10 sm:mb-8 md:mb-10">
@@ -28,7 +28,7 @@ const TiposIncidentesForm = ({opcionesIncidentes, handleTipoIncidenteChange, han
                     />
                     <ErrorMessage error={error}/>
                     <div className="flex-1"></div>
-                    <Button onClick={handleSubmitIncidente}>
+                    <Button type="submit">
                         SIGUIENTE
                     </Button>
                     

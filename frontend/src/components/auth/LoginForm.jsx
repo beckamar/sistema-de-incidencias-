@@ -53,7 +53,7 @@ const LoginForm = ({
                         />
                         )}
                         <ErrorMessage error={error}/>
-                        <Button onClick={handleSubmit}>INGRESAR</Button>
+                        <Button type="submit">INGRESAR</Button>
                     </form>
 
                 </div>

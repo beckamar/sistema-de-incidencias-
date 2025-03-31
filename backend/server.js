@@ -20,7 +20,10 @@ app.use(cors());
 //Routes
 app.use("/api", rolRoute);
 app.use("/api", sedeRoute);
+
 app.use("/api", empleadosRoutes);
+
+
 app.use("/api", incidentesRoutes);
 app.use("/api", loginRoutes);
 

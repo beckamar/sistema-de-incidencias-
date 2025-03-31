@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useTiposIncidenteData from '../../../services/tiposIncidenteData.js';
+import useTiposIncidenteData from '../../../services/tiposIncidenteData';
 import { useNavigate } from 'react-router-dom';
 
 export const useTiposIncidentesForm = () =>{
@@ -41,6 +41,7 @@ export const useTiposIncidentesForm = () =>{
             setError(err.message); 
         }
     };
+
 
     return {
         tiposIncidentes,
