@@ -20,6 +20,10 @@ export const useTiposIncidentesForm = () =>{
         setError(null);
     };
 
+    const handleBackLogin = () => {
+        navigate("/login")
+    };
+
 
     const handleSubmitIncidente = () => {
         try {
@@ -44,6 +48,7 @@ export const useTiposIncidentesForm = () =>{
         opcionesIncidentes,
         handleSubmitIncidente,
         handleTipoIncidenteChange,
+        handleBackLogin,
         error
     }
 };
