@@ -1,15 +1,13 @@
-//Response function
-
-import { actualizarIncidenteService, crearIncidenteService, getIncidenteIdService, getIncidentesService, getTiposIncidentesService } from "../models/incidenteModel.js";
+import { actualizarIncidenteService, getIncidenteIdService, getIncidentesService, getTiposIncidentesService, postIncidenteService } from "../models/incidenteModel.js";
 import handleResponse from '../middlewares/responseHandler.js';
 
 
-export const crearIncidente = async (req, res, next) => {
-    const {id_catincidentes, id_centrotrabajo, id_subcentro, datosEspecificos} = req.body;
+export const postIncidente = async (req, res, next) => {
+    const {id_catincidentes, id_centrotrabajo, id_subcentro} = req.body;
     try{     
         if (!id_catincidentes || !id_centrotrabajo) { return handleResponse(res, 400, "Faltan campos obligatorios");}
 
-        const nuevoIncidente = await crearIncidenteService (id_catincidentes, id_subcentro, id_centrotrabajo);
+        const nuevoIncidente = await postIncidenteService(id_catincidentes, id_centrotrabajo, id_subcentro);
 
         handleResponse(res, 201, "Incidente creado",nuevoIncidente);
     }catch(err){

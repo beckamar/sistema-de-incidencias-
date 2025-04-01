@@ -24,14 +24,25 @@ export const getIncidenteIdService = async (id) =>  {
 };
 
 
-export const crearIncidenteService = async (tipo_incidente,centrotrabajo, subcentro_trabajo) =>  {
-    const result = await pool.query(`
-        INSERT INTO incidente (
-        id_catalogoincidentes, 
-        id_centrotrabajo, 
-        id_subcentro) 
-        VALUES ($1, $2, $3) RETURNING *`, [tipo_incidente, centrotrabajo, subcentro_trabajo]);
-    return result.rows;
+export const postIncidenteService = async (id_catalogoincidentes,id_centrotrabajo, id_subcentro) =>  {
+    const client = await pool.connect();
+    try {
+        await client.query('BEGIN');
+        const result = await client.query(`
+            INSERT INTO incidente (
+            id_catalogoincidentes, 
+            id_centrotrabajo, 
+            id_subcentro) 
+            VALUES ($1, $2, $3) RETURNING *`, [id_catalogoincidentes, id_centrotrabajo, id_subcentro]);
+        
+        await client.query('COMMIT');
+        return result.rows;
+    } catch (error) {
+        await client.query('ROLLBACK');
+        throw error;
+    }finally{
+        client.release();
+    }
 };
 
 
