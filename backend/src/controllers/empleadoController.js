@@ -31,8 +31,6 @@ export const postEmpleado = async (req, res) => {
             clave = null
         } = req.body;
 
-        console.log(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, clave);
-
         const crearEmpleado = await postEmpleadoService(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, clave);
         handleResponse(res, 200, "Empleado creado para reporte", crearEmpleado)
     } catch (error) {
