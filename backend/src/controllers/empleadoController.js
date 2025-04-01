@@ -1,4 +1,4 @@
-import { getEmpleadoIdService, getEmpleadosService } from "../models/empleadoModel.js";
+import { getEmpleadoIdService, getEmpleadosService, postEmpleadoService } from "../models/empleadoModel.js";
 import handleResponse from '../middlewares/responseHandler.js';
 
 
@@ -18,5 +18,24 @@ export const getEmpleadoId = async (req, res, next) => {
         handleResponse(res, 200, "empleado encontrado", empleado);
     }catch(err){
         next(err);
+    }
+};
+
+export const postEmpleado = async (req, res) => {
+    try {
+        const {
+            primer_nombre,
+            segundo_nombre = null,
+            primer_apellido,
+            segundo_apellido,
+            clave = null
+        } = req.body;
+
+        console.log(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, clave);
+
+        const crearEmpleado = await postEmpleadoService(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, clave);
+        handleResponse(res, 200, "Empleado creado para reporte", crearEmpleado)
+    } catch (error) {
+        handleResponse(res, 500, "Error al crear empleado para reporte", { error: error.message});
     }
 };

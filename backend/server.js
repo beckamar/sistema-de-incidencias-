@@ -7,8 +7,9 @@ import empleadosRoutes from "./src/routes/empleadoRoutes.js";
 import incidentesRoutes from "./src/routes/incidenteRoute.js";
 import loginRoutes from "./src/routes/loginRoutes.js";
 import errorHandling from "./src/middlewares/errorHandler.js";
-import rolRoute from "./src/routes/rolRoute.js"
-import sedeRoute from "./src/routes/SedeRoutes.js"
+import rolRoute from "./src/routes/rolRoute.js";
+import sedeRoute from "./src/routes/SedeRoutes.js";
+import ausenciaPersonalRoutes from "./src/routes/ausenciaPersonalRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -22,6 +23,7 @@ app.use("/api", rolRoute);
 app.use("/api", sedeRoute);
 
 app.use("/api", empleadosRoutes);
+app.use("/api", ausenciaPersonalRoutes);
 
 
 app.use("/api", incidentesRoutes);

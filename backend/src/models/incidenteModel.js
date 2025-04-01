@@ -1,7 +1,7 @@
 import pool from "../config/db.js";
 
 export const getIncidentesService = async () =>  {
-    const result = pool.query(`
+    const result = await pool.query(`
         SELECT 
         i.id_incidente, 
         i.fecha_reporte, 
@@ -15,7 +15,7 @@ export const getIncidentesService = async () =>  {
         JOIN subcentro_trabajo sc ON i.id_subcentro = sc.id_subcentro
         ORDER BY 
         i.fecha_reporte DESC`);
-    return (await result).rows;
+    return result.rows;
 };
 
 export const getIncidenteIdService = async (id) =>  {
