@@ -10,23 +10,17 @@ export const getEmpleadoIdService = async (id) =>  {
     return result.rows[0];
 };
 
-export const postEmpleadoService = async(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, clave) => {
+export const postEmpleadoService = async(nombre_completo, clave) => {
     const client = await pool.connect()
 
     try {
         await client.query('BEGIN');
-        const setPrimer_nombre = emptyToNull(primer_nombre);
-        const setSegundo_nombre = emptyToNull(segundo_nombre);
-        const setPrimer_apellido = emptyToNull(primer_apellido);
-        const setSegundo_apellido = emptyToNull(segundo_apellido);
-        const setClave = emptyToNull(clave);
-
 
         const result = await client.query(`        
             INSERT INTO empleado 
-                (primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, clave)
-                VALUES ($1, $2, $3, $4, $5)
-                RETURNING *;`, [setPrimer_nombre, setSegundo_nombre, setPrimer_apellido, setSegundo_apellido, setClave]);
+                (nombre_completo, clave)
+                VALUES ($1, $2)
+                RETURNING *;`, [nombre_completo, clave]);
         await client.query('COMMIT');
         return result.rows[0];
     } catch (error) {

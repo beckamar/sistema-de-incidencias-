@@ -30,9 +30,7 @@ async function getSubcentros(id_centro) {
 
 async function login(idRol) {
     try {
-        console.log("id enviado al back:", idRol);
         const response = await axiosInstance.post("/api/login", {id_rol: idRol});
-        console.log("datos recividos del backend:", response.data);
 
         return {
             error: false,
@@ -52,12 +50,39 @@ async function getTiposIncidentes(){
     }
 }
 
-async function postNuevoReporte(idTipoIncidente){}
+async function iniciarReporte(){
+
+}
+
+async function postReporteAusencia(idTipoIncidente){}
+
+async function postEmpleado(nombre_completo, clave){
+    try {
+        const response = await axiosInstance.post("/api/empleado/crear", {
+            nombre_completo,
+            clave
+        });
+        return { error: false, data: response.data.data };        
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al crear empleado"};        
+    }
+};
+
+async function getTiposAusenciaPersonal() {
+    try {
+        const response = await axiosInstance.get("/api/ausencia/tipos");
+        return { error: false, data: response.data.data };                
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al obtener los tipos de ausencias de personal"};        
+    }
+};
 
 export {
     getRoles,
     getCentrostrabajo,
     getSubcentros,
     login,
-    getTiposIncidentes
+    getTiposIncidentes,
+    postEmpleado,
+    getTiposAusenciaPersonal
 };

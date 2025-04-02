@@ -24,14 +24,11 @@ export const getEmpleadoId = async (req, res, next) => {
 export const postEmpleado = async (req, res) => {
     try {
         const {
-            primer_nombre,
-            segundo_nombre = null,
-            primer_apellido,
-            segundo_apellido,
-            clave = null
+            nombre_completo,
+            clave
         } = req.body;
 
-        const crearEmpleado = await postEmpleadoService(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, clave);
+        const crearEmpleado = await postEmpleadoService(nombre_completo, clave);
         handleResponse(res, 200, "Empleado creado para reporte", crearEmpleado)
     } catch (error) {
         handleResponse(res, 500, "Error al crear empleado para reporte", { error: error.message});
