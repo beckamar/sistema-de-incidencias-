@@ -24,7 +24,7 @@ const useFetchData = (fetchFunction, dependencies = [], initialFetch = true) => 
             fetchData();
         }
     }, [...dependencies, initialFetch]);
-    return {data, error, fetchData}
+    return {data, error, fetchData};
 };
 
 export default useFetchData;
