@@ -40,13 +40,18 @@ export const useLoginForm = () => {
         e.preventDefault();
         setError(null);
 
-        try {
+        if (!selectedRol) {
+            setError("Selecciona un Rol");
+            return;
+        }
+
+
+        try {            
+
             const { success, userData} = await fetchSubmit(selectedRol, selectedCentro, selectedSubcentro);
-            if (!success || !userData?.permisos) {
-                throw new Error("Fallo en login o permisos faltantes");
+            if (!success) {
+                throw new Error("Error al enviar datos");
             }
-        
-            localStorage.setItem('userData', JSON.stringify(userData));
             const requiereCentro = (userData.permisos.acceso_pantallas.includes('admin') && userData.permisos.ver_reportes.includes('asignados') )|| 
                                     userData.permisos.ver_reportes.includes('ninguno');
     
@@ -54,11 +59,12 @@ export const useLoginForm = () => {
                 throw new Error("Campos incompletos");   
             }
             if(userData.permisos.acceso_pantallas.includes('admin') ){
-                navigate('/admin', { replace: true });  
+                navigate('/admin', { replace: true, state:{selectedRol, selectedCentro, selectedSubcentro}});  
             }else{
-                navigate('/tipoincidente', { replace: true });
+                navigate('/tipoincidente', { replace: true, state:{id_centrotrabajo: selectedCentro,  id_subcentro: selectedSubcentro} });
             }
-            
+
+
         } catch (err) {
             setError(err.message);
             

@@ -1,3 +1,4 @@
+import axios from "axios";
 import axiosInstance from "./axiosInstance";
 
 
@@ -50,9 +51,19 @@ async function getTiposIncidentes(){
     }
 }
 
-async function iniciarReporte(){
-
-}
+async function iniciarReporte(id_catincidentes,id_centrotrabajo, id_subcentro){
+    try {
+        const response = await axiosInstance.post("/api/incidente/crear",{
+            id_catincidentes,
+            id_centrotrabajo,
+            id_subcentro
+        });
+        console.log("Respuesta del backend:", response.data);
+        return { error: false, data: response.data.data };        
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al iniciar la creacion de un reporte"};          
+    }
+};
 
 async function postReporteAusencia(idTipoIncidente){}
 
@@ -84,5 +95,6 @@ export {
     login,
     getTiposIncidentes,
     postEmpleado,
-    getTiposAusenciaPersonal
+    getTiposAusenciaPersonal,
+    iniciarReporte
 };
