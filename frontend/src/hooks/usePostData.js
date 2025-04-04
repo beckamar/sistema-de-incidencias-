@@ -4,7 +4,7 @@ const usePostData = (postFunction) => {
         const [data, setData] = useState([]);
         const [error, setError] = useState(null); 
 
-        const executePost = useCallback(async() => {
+        const executePost = useCallback(async(...args) => {
 
             setError(null);
 

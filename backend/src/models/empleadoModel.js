@@ -20,7 +20,7 @@ export const postEmpleadoService = async(nombre_completo, clave) => {
             INSERT INTO empleado 
                 (nombre_completo, clave)
                 VALUES ($1, $2)
-                RETURNING *;`, [nombre_completo, clave]);
+                RETURNING id_empleado, nombre_completo, clave;`, [nombre_completo, clave]);
         await client.query('COMMIT');
         return result.rows[0];
     } catch (error) {

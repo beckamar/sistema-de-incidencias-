@@ -65,14 +65,28 @@ async function iniciarReporte(id_catincidentes,id_centrotrabajo, id_subcentro){
     }
 };
 
-async function postReporteAusencia(idTipoIncidente){}
+async function postReporteAusencia(id_incidente, id_empleado, id_catalogoAusencias, descripcion){
+    try {
+        const response = await axiosInstance.post("/api/ausencia/crear", {
+            id_incidente,
+            id_empleado,
+            id_catalogoAusencias,
+            descripcion
+        });
+        console.log("Respuesta del backend reporteAUsencia:", response.data);
+        return { error: false, data: response.data.data };        
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al crear el reporte por ausencia"};          
+    }
+}
 
-async function postEmpleado(nombre_completo, clave){
+async function postempleado(nombre_completo, clave){
     try {
         const response = await axiosInstance.post("/api/empleado/crear", {
             nombre_completo,
             clave
         });
+        console.log("Respuesta del backend: ", response.data);
         return { error: false, data: response.data.data };        
     } catch (error) {
         return { error: true, data: error.response?.data?.msg || "Error al crear empleado"};        
@@ -94,7 +108,8 @@ export {
     getSubcentros,
     login,
     getTiposIncidentes,
-    postEmpleado,
+    postempleado,
     getTiposAusenciaPersonal,
-    iniciarReporte
+    iniciarReporte,
+    postReporteAusencia
 };

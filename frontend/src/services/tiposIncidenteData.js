@@ -9,7 +9,7 @@ const useTiposIncidenteData = () => {
     const fetchIniciarReporte = useCallback(async(id_catincidentes,id_centrotrabajo, id_subcentro) => {
         try {
             const {error:apiError, data } = await iniciarReporte(id_catincidentes,id_centrotrabajo, id_subcentro);
-            return {success: true, userData: data};
+            return {success: true, data};
         } catch (error) {
             return {success: false, error: "Error al iniciar reporte"};
 

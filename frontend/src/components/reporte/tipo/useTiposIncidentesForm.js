@@ -20,7 +20,7 @@ export const useTiposIncidentesForm = () =>{
 
 
     const handleTipoIncidenteChange = (e) =>{
-        setSelectedTipoIncidente(Number(e.target.value));
+        setSelectedTipoIncidente(e.target.value);
         setError(null);
     };
 
@@ -38,23 +38,22 @@ export const useTiposIncidentesForm = () =>{
         }
 
         try {            
-            const {success, error: apiError} = await fetchIniciarReporte(selectedtipoIncidente,id_centrotrabajo, id_subcentro);
-            
-            if (!success) throw new Error(apiError || "Error al crear reporte");
-            
+            const response = await fetchIniciarReporte(selectedtipoIncidente,id_centrotrabajo, id_subcentro);
+                        
             const routes = {
                 1: '/ausenciapersonal',
                 2: '/equipotrabajo',
                 3: '/otro'
             };
+
+            console.log("Ide incidente desde useTiposINcidentesFOrm: ", response.data.id_incidente);
+
             
             if(routes[selectedtipoIncidente]){
                 navigate(routes[selectedtipoIncidente], {
                     replace: true,
                     state: {
-                        selectedtipoIncidente,
-                        id_centrotrabajo,
-                        id_subcentro
+                        id_incidente: response.id_incidente
                     }
                 
                 });

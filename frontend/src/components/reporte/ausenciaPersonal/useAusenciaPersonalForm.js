@@ -1,16 +1,19 @@
 import React from 'react'
 import ausenciaPersonalData from '../../../services/ausenciaPersonalData';
 import { useState } from 'react';
+import { useLocation} from 'react-router-dom';
+
 
 export const useAusenciaPersonalForm = () => {
-    const { tiposAusencias, tiposAusenciasError, postEmpleado, empleadoError} = ausenciaPersonalData();
+    const { tiposAusencias, tiposAusenciasError, postEmpleado, fetchReporteAusencia} = ausenciaPersonalData();
     const [selectedTipoAusencia, setSelectedTipoAusencia] = useState(null);
-    const [useDescripcion, setDescripcion] = useState("");
-    const [useClaveChange, setClaveChange] = useState("");
-    const [empleadoData, setEmpleadoData] = useState({
-        nombre_completo: '',
-        clave:''
-    });
+    const [descripcion, setDescripcion] = useState("");
+    const [clave, setClaveChange] = useState("");
+    const [nombreCompleto, setNombreCompleto] = useState("");
+    const location = useLocation();
+
+
+    const { id_incidente } = location.state;
 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -22,16 +25,12 @@ export const useAusenciaPersonalForm = () => {
     }));
 
     const handleTipoAusenciasChange = (e) => {
-        setSelectedTipoAusencia(Number(e.target.value));
+        setSelectedTipoAusencia(e.target.value);
         setError(null);
     };
 
     const handleEmpleadoChange = (e) => {
-        const {name, value} = e.target.value;
-        setEmpleadoData(prev=>({
-            ...prev,
-            [name]: value
-        }));
+        setNombreCompleto(e.target.value);
     };
 
     const handleDescripcion = (e) => {
@@ -44,9 +43,27 @@ export const useAusenciaPersonalForm = () => {
     }
 
 
+    const handleSubmitReporteAusencia = async(e) => {
+        e.preventDefault();
+
+        try {
+            const {success: empleadoSuccess, empleado, error: empleadoError} = await postEmpleado(nombreCompleto, clave);
+            if (!empleadoSuccess) throw new Error(empleadoError);
+
+            const {success: reporteSuccess, error: reporteError } = await fetchReporteAusencia(id_incidente, empleado.id_empleado, selectedTipoAusencia, descripcion);
+            if (!reporteSuccess) throw new Error(reporteError);
+            
+            setSubmitSuccess(true);
+        } catch (error) {
+            setError(error.message);             
+        }finally {
+            setIsSubmitting(false);
+        }
+        
+    };
+
+
   
-
-
     return{
         tiposAusencias,
         tiposAusenciasError,
@@ -54,13 +71,18 @@ export const useAusenciaPersonalForm = () => {
         opcionesAusencias,
         handleTipoAusenciasChange,
 
-        handleEmpleadoChange,
-        empleadoData,
-
-        useDescripcion,
+        descripcion,
         handleDescripcion,
 
-        useClaveChange,
-        handleClaveChange
+        clave,
+        handleClaveChange,
+
+        nombreCompleto,
+        handleEmpleadoChange,
+
+        handleSubmitReporteAusencia,
+        isSubmitting,
+        submitSuccess,
+        error
     };
 }
