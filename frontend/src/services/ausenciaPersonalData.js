@@ -26,11 +26,11 @@ const ausenciaPersonalData = () => {
     const fetchReporteAusencia = useCallback(async(id_incidente, id_empleado, id_catalogoAusencias, descripcion) => {
         try {
             const {error:apiError, data } = await postReporteAusencia(id_incidente, id_empleado, id_catalogoAusencias, descripcion);
-            if(apiError || !data?.userData){throw new Error (apiError ? data : "Api Error"); }
-            return {success: true, userData: data.userData};
+            if(apiError || !data){throw new Error (apiError ? data : "Api Error"); }
+            return {success: true, userData: data};
             
         } catch (error) {
-            return {success: false, error: "Error de conexion"};            
+            return {success: false, error: "Error en Service Data"};            
         }
     }, []);
 

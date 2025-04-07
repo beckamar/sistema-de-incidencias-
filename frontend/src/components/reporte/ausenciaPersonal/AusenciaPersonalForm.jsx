@@ -8,7 +8,7 @@ import { Input } from "../../Input";
 import { InputText } from "../../InputText";
 
 
-const AusenciaPersonalForm = ({opcionesAusencias, handleTipoAusenciasChange, tiposAusenciasError, descripcion, handleDescripcion, clave, handleClaveChange, nombreCompleto, handleEmpleadoChange, handleSubmitReporteAusencia, isSubmitting, error}) => {
+const AusenciaPersonalForm = ({opcionesAusencias, handleTipoAusenciasChange, submitSuccess, descripcion, handleDescripcion, clave, handleClaveChange, nombreCompleto, handleEmpleadoChange, handleSubmitReporteAusencia, isSubmitting, error}) => {
 
     return (
         <div className="relative min-h-screen w-full flex flex-col">
@@ -33,7 +33,8 @@ const AusenciaPersonalForm = ({opcionesAusencias, handleTipoAusenciasChange, tip
                     <InstructionText label="Descripción || Observación" className={"mt-4 sm:mt-6 md:mt-8 lg:mt-10"}/>
                     <InputText value={descripcion} onChange={handleDescripcion}/>
 
-                    <ErrorMessage error={tiposAusenciasError}/>
+                    <ErrorMessage error={error}/>
+                    {submitSuccess && (<p className="text-green-600 text-sm mt-2">Reporte enviado correctamente</p>)}
                     <div className="flex-1"></div>
                     <Button type="submit">
                         ENVIAR

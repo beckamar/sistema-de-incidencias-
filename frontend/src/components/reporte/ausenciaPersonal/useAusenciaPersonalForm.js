@@ -45,15 +45,25 @@ export const useAusenciaPersonalForm = () => {
 
     const handleSubmitReporteAusencia = async(e) => {
         e.preventDefault();
+        setError(null);
+
+        if (!nombreCompleto || !selectedTipoAusencia) {
+            setError("Campos obligatorios vacios");
+            return;
+        }    
 
         try {
+            setIsSubmitting(true);
+
             const {success: empleadoSuccess, empleado, error: empleadoError} = await postEmpleado(nombreCompleto, clave);
             if (!empleadoSuccess) throw new Error(empleadoError);
 
-            const {success: reporteSuccess, error: reporteError } = await fetchReporteAusencia(id_incidente, empleado.id_empleado, selectedTipoAusencia, descripcion);
+            const {success: reporteSuccess  , error: reporteError } = await fetchReporteAusencia(id_incidente, empleado.id_empleado, selectedTipoAusencia, descripcion);
+            console.log('Respuesta de reporte:', { reporteSuccess, reporteError });
             if (!reporteSuccess) throw new Error(reporteError);
             
             setSubmitSuccess(true);
+
         } catch (error) {
             setError(error.message);             
         }finally {
