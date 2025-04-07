@@ -38,7 +38,7 @@ export const useTiposIncidentesForm = () =>{
         }
 
         try {            
-            const response = await fetchIniciarReporte(selectedtipoIncidente,id_centrotrabajo, id_subcentro);
+            const {error, data} = await fetchIniciarReporte(selectedtipoIncidente,id_centrotrabajo, id_subcentro);
                         
             const routes = {
                 1: '/ausenciapersonal',
@@ -46,14 +46,14 @@ export const useTiposIncidentesForm = () =>{
                 3: '/otro'
             };
 
-            console.log("Ide incidente desde useTiposINcidentesFOrm: ", response.data.id_incidente);
+            console.log("Ide incidente desde useTiposINcidentesFOrm: ", data.id_incidente);
 
             
             if(routes[selectedtipoIncidente]){
                 navigate(routes[selectedtipoIncidente], {
                     replace: true,
                     state: {
-                        id_incidente: response.id_incidente
+                        id_incidente: data.id_incidente
                     }
                 
                 });

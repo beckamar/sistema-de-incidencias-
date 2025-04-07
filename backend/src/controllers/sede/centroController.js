@@ -1,5 +1,5 @@
 import handleResponse from '../../middlewares/responseHandler.js';
-import { getIdCentroTrabajoService } from '../../models/sede/centroModel.js';
+import { getIdCentroTrabajoService } from '../../services/sede/centroModel.js';
 
 
 export const getIdCentroTrabajo = async(req, res) =>{

@@ -1,4 +1,4 @@
-import { getEmpleadoIdService, getEmpleadosService, postEmpleadoService } from "../models/empleadoModel.js";
+import { getEmpleadoIdService, getEmpleadosService, postEmpleadoService } from "../services/empleadoModel.js";
 import handleResponse from '../middlewares/responseHandler.js';
 
 

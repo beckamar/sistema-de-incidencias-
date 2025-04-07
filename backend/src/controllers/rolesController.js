@@ -1,4 +1,4 @@
-import { getRolService } from "../models/RolModel.js";
+import { getRolService } from "../services/RolModel.js";
 import handleResponse from "../middlewares/responseHandler.js";
 
 export const getRoles = async (req, res) => {

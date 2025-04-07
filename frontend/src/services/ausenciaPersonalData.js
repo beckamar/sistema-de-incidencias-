@@ -25,9 +25,7 @@ const ausenciaPersonalData = () => {
 
     const fetchReporteAusencia = useCallback(async(id_incidente, id_empleado, id_catalogoAusencias, descripcion) => {
         try {
-            console.log("Datos enviados a reporte:", {id_incidente, id_empleado, id_catalogoAusencias, descripcion});
             const {error:apiError, data } = await postReporteAusencia(id_incidente, id_empleado, id_catalogoAusencias, descripcion);
-            console.log("Respuesta de reporte:", {apiError, data}); 
             if(apiError || !data?.userData){throw new Error (apiError ? data : "Api Error"); }
             return {success: true, userData: data.userData};
             

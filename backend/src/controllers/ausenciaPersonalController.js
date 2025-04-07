@@ -1,5 +1,7 @@
-import { getTiposAusenciaService, postReporteAusenciaService } from "../models/ausenciaPersonalModel.js";
+import { getTiposAusenciaService, postReporteAusenciaService } from "../services/ausenciaPersonalModel.js";
 import handleResponse from "../middlewares/responseHandler.js";
+
+
 
 export const getTiposAusenciaPersonal = async(req, res) => {
     try {

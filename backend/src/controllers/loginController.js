@@ -1,17 +1,13 @@
 import handleResponse from '../middlewares/responseHandler.js';
-import { getRolPermisoService } from '../models/RolModel.js';
+import { getRolPermisoService } from '../services/RolModel.js';
 
-const MSG = {
-    loginExitoso: "Acceso concedido.",
-    loginError: "Error en el login"
-};
 
 export const login = async(req, res) =>{
     try {
         const { id_rol} = req.body;
 
         const permisos = await getRolPermisoService(id_rol);
-        handleResponse(res, 200, MSG.loginExitoso,  {
+        handleResponse(res, 200,"Acceso concedido.",  {
             userData: { 
                 rol: { id: id_rol },
                 permisos
@@ -19,6 +15,6 @@ export const login = async(req, res) =>{
         });
 
     } catch (error) {
-        handleResponse(res, 500, MSG.loginError, {error: error.message});
+        handleResponse(res, 500, "Error en el login", {error: error.message});
     }
 };

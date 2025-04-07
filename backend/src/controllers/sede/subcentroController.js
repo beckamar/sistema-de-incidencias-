@@ -1,4 +1,4 @@
-import { getIdSubcentroService } from '../../models/sede/subcentro.js';
+import { getIdSubcentroService } from '../../services/sede/subcentro.js';
 import handleResponse from '../../middlewares/responseHandler.js';
 
 
