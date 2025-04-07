@@ -42,6 +42,7 @@ export const useAusenciaPersonalForm = () => {
         setClaveChange(valor.toUpperCase());
     }
 
+    
 
     const handleSubmitReporteAusencia = async(e) => {
         e.preventDefault();

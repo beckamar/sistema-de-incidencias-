@@ -41,10 +41,4 @@
   color: #888;
 }
 
-.custom-select option:hover {
-  background-color: #e0f7fa; 
-}
 
-.custom-select option:checked {
-  background-color: #80cbc4; 
-}
