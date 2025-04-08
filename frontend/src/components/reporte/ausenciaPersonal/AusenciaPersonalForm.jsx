@@ -1,5 +1,4 @@
 import React from "react";
-import swal from "sweetalert";
 import Header from "../../Header";
 import Dropdown from "../../Dropdown";
 import Button from "../../Button";
@@ -7,27 +6,12 @@ import ErrorMessage from "../../ErrorMessage";
 import { InstructionText } from "../../InstructionText";
 import { Input } from "../../Input";
 import { InputText } from "../../InputText";
-import { useNavigate } from "react-router-dom";
+import useSubmitSuccess from "../../../hooks/useSubmitSuccess";
 
 
 const AusenciaPersonalForm = ({opcionesAusencias, handleTipoAusenciasChange, submitSuccess, descripcion, handleDescripcion, clave, handleClaveChange, nombreCompleto, handleEmpleadoChange, handleSubmitReporteAusencia, error}) => {
 
-    const navigate = useNavigate();
-
-    React.useEffect(() => {
-        if(submitSuccess){
-            swal({
-                text: "Tu reporte se ha enviado correctamente.",
-                icon: "success",
-                button: {
-                    text: "Aceptar",
-                    className: "btn-primary",
-                },
-            }).then(() => {
-                navigate('/login')
-            });
-        }
-    }, [submitSuccess]);
+    useSubmitSuccess(submitSuccess, "/login");
     
     return (
         <div className="relative min-h-screen w-full flex flex-col">

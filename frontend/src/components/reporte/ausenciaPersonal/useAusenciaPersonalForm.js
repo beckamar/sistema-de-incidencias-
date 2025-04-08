@@ -1,4 +1,3 @@
-import React from 'react'
 import ausenciaPersonalData from '../../../services/ausenciaPersonalData';
 import { useState } from 'react';
 import { useLocation} from 'react-router-dom';
@@ -31,6 +30,7 @@ export const useAusenciaPersonalForm = () => {
 
     const handleEmpleadoChange = (e) => {
         setNombreCompleto(e.target.value);
+        setError(null);
     };
 
     const handleDescripcion = (e) => {
@@ -40,9 +40,10 @@ export const useAusenciaPersonalForm = () => {
     const handleClaveChange = (e) =>{
         const valor = e.target.value;
         setClaveChange(valor.toUpperCase());
+        setError(null);
     }
 
-    
+
 
     const handleSubmitReporteAusencia = async(e) => {
         e.preventDefault();

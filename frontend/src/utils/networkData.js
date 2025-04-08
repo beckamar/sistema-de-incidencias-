@@ -63,21 +63,6 @@ async function iniciarReporte(id_catincidentes,id_centrotrabajo, id_subcentro){
     }
 };
 
-async function postReporteAusencia(id_incidente, id_empleado, id_catalogoAusencias, descripcion){
-    try {
-        const response = await axiosInstance.post("/api/v1/ausenciapersonal", {
-            id_incidente,
-            id_empleado,
-            id_catalogoAusencias,
-            descripcion
-        });
-        console.log("Respuesta del backend reporteAUsencia:", response.data.data);
-        return { error: false, data: response.data.data };        
-    } catch (error) {
-        return { error: true, data: error.response?.data?.msg || "Error al crear el reporte por ausencia"};          
-    }
-}
-
 async function postempleado(nombre_completo, clave){
     try {
         const response = await axiosInstance.post("/api/v1/empleados", {
@@ -100,6 +85,35 @@ async function getTiposAusenciaPersonal() {
     }
 };
 
+async function postReporteAusencia(id_incidente, id_empleado, id_catalogoAusencias, descripcion){
+    try {
+        const response = await axiosInstance.post("/api/v1/ausenciapersonal", {
+            id_incidente,
+            id_empleado,
+            id_catalogoAusencias,
+            descripcion
+        });
+        console.log("Respuesta del backend reporteAUsencia:", response.data.data);
+        return { error: false, data: response.data.data };        
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al crear el reporte por ausencia"};          
+    }
+}
+
+async function postOtroTipoIncidente(id_incidente, tipo, descripcion){
+    try {
+        const response = await axiosInstance.post("/api/v1/otrotipo", {
+            id_incidente,
+            tipo,
+            descripcion
+        });
+        console.log("Respuesta backend otrotpoincidente: ", response);
+        return { error: false, data: response.data.data };                
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al crear el reporte otroTipo"};                  
+    }
+}
+
 export {
     getRoles,
     getCentrostrabajo,
@@ -109,5 +123,6 @@ export {
     postempleado,
     getTiposAusenciaPersonal,
     iniciarReporte,
-    postReporteAusencia
+    postReporteAusencia,
+    postOtroTipoIncidente
 };
