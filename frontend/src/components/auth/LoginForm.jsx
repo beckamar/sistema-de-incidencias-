@@ -28,7 +28,7 @@ const LoginForm = ({
         <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0 md:w-3/4 lg:w-1/2 xl:w-1/3">
             <div className="flex flex-col p-8 md:p-14 text-center w-full">
 
-                <span className="mb-2 text-xl font-semibold text-gray-600 md:text-2xl lg:text-3xl">Gestion de Incidencias</span>
+                <span className="mb-2 text-xl font-semibold text-gray-600 md:text-2xl lg:text-3xl">Gestión de Incidencias</span>
                 <span className="font-normal text-xs text-gray-500 mb-10 md:text-sm lg:text-base">Selecciona la información solicitada</span>
                     
                     <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">

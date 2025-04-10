@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export const InputText = ({maxWords = 150, placeholder = "", onChange, value, className, ...props}) => {
+export const InputText = ({maxWords = 50, placeholder = "", onChange, value, className, ...props}) => {
   const [inputValueText, setInputValueText] = useState(value || "");
   const [showWarning, setShowWarning] = useState(false);
 

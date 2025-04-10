@@ -1,8 +1,15 @@
 {
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
+    "@mui/x-date-pickers": "^7.28.3",
+    "@tanstack/react-query": "^5.72.2",
     "express": "^5.1.0",
+    "material-react-table": "^3.2.1",
     "react-icons": "^5.5.0",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^11.17.2"
+    "sweetalert2": "^11.6.13"
   }
 }

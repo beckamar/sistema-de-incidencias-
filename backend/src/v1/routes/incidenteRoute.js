@@ -1,5 +1,5 @@
 import express from "express";
-import { getIncidentes, getTiposIncidentes, postIncidente } from "../../controllers/incidenteController.js";
+import { getIncidentes, getTiposIncidentes, postIncidente, putStatusIncidente } from "../../controllers/incidenteController.js";
 
 const router = express.Router();
 
@@ -7,8 +7,8 @@ const router = express.Router();
 router
     .get("/", getIncidentes)
     .get("/tipos", getTiposIncidentes)
-    .post("/", postIncidente);
+    .post("/", postIncidente)
+    .put("/:id_incidente", putStatusIncidente);
 
-// .get("/:id_incidentes", actualizarIncidente)
 
 export default router;

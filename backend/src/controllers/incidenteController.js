@@ -1,4 +1,4 @@
-import { actualizarIncidenteService, getIncidenteIdService, getIncidentesService, getTiposIncidentesService, postIncidenteService } from "../services/incidenteModel.js";
+import { putStatusIncidenteService, getIncidenteIdService, getIncidentesService, getTiposIncidentesService, postIncidenteService } from "../services/incidenteModel.js";
 import handleResponse from '../middlewares/responseHandler.js';
 
 
@@ -32,26 +32,26 @@ export const getIncidentes = async (req, res, next) => {
 
 export const getIncidenteId = async (req, res, next) => {
     try{
-        const incidente = await getIncidenteIdService(req.params.id);
+        const incidente = await getIncidenteIdService(req.params.id_incidente);
         if(!incidente) return handleResponse(res, 404, "incidente no encontrado");
         handleResponse(res, 200, "Incidente encontrado",incidente);
     }catch(err){
-        next(err);
+        handleResponse(res, 500, "Error al obtener el Status del incidente", { error: err.message});
     }
 };
 
-/*
-export const actualizarIncidente = async (req, res, next) => {
+
+export const putStatusIncidente = async (req, res, next) => {
     const {estado} = req.body;
     try {
-        const incidenteActualizado = await actualizarIncidenteService(req.params.id, estado);
-        if(!incidente) return handleResponse(res, 404, "incidente no encontrado");
+        const incidenteActualizado = await putStatusIncidenteService(req.params.id_incidente, estado);
+        if(!incidenteActualizado) return handleResponse(res, 404, "incidente no encontrado");
         handleResponse(res, 200, "Incidente actualizado", incidenteActualizado);
     } catch (error) {
-        next(error);
+        handleResponse(res, 500, "Error al obtener el Status del incidente", { error: error.message});
     }
 };
-*/
+
 
 export const getTiposIncidentes = async (req, res, next) => {
     try {

@@ -1,5 +1,6 @@
 import axios from "axios";
 import axiosInstance from "./axiosInstance";
+import { Try } from "@mui/icons-material";
 
 
 async function getRoles() {
@@ -114,6 +115,27 @@ async function postOtroTipoIncidente(id_incidente, tipo, descripcion){
     }
 }
 
+async function getIncidentes(){
+    try {
+        const response = await axiosInstance.get("/api/v1/incidentes");
+        return { error: false, data: response.data.data };                
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al obtener la lista de incidentes"};        
+    }
+}
+
+async function putStatusIncidente(id_incidente, estado){
+    try {
+        const response = await axiosInstance.put(`/api/v1/incidentes/${id_incidente}`,{
+            estado: estado
+        });
+        return {error: false, data: response.data.data};
+    } catch (error) {
+        return { error: true,  data: error.response?.data?.msg || "Error al actualizar el estado del incidente"};
+        
+    }
+}
+
 export {
     getRoles,
     getCentrostrabajo,
@@ -124,5 +146,7 @@ export {
     getTiposAusenciaPersonal,
     iniciarReporte,
     postReporteAusencia,
-    postOtroTipoIncidente
+    postOtroTipoIncidente,
+    getIncidentes,
+    putStatusIncidente
 };
