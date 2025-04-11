@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import otroTipoIncidenteData from '../../../services/otroTipoIncidenteData';
+import otroTipoIncidenteData from '../../../services/api/otroTipoIncidenteData';
 
 
 export const useIncidenteOtroForm = () => {

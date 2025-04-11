@@ -1,6 +1,6 @@
-import useFetchData from '../hooks/useFetchData'
-import { getIncidentes, putStatusIncidente } from '../utils/networkData'
-import useUpdateData from '../hooks/useUpdateData';
+import useFetchData from '../../hooks/useFetchData'
+import { getIncidentes, putStatusIncidente } from '../../utils/networkData'
+import useUpdateData from '../../hooks/useUpdateData';
 
 const incidentesData = () => {
     const {data: listaIncidentes, error: fetchError, fetchData} = useFetchData(getIncidentes);

@@ -1,6 +1,6 @@
 import React from 'react';
-import Dropdown from '../Dropdown';
-import Button from '../Button';
+import Dropdown from '../ui/Dropdown';
+import Button from '../ui/Button';
 import ErrorMessage from '../ErrorMessage';
 import logoCFE from '/src/assets/logoCFE.png';
 import fondoLogin from '/src/assets/fondoLogin.webp';
@@ -20,7 +20,7 @@ const LoginForm = ({
 }) => (
     <div className='relative flex items-center justify-center min-h-screen bg-cover bg-center' style={{ backgroundImage: `url(${fondoLogin})` }}>
         <div className="absolute inset-0 bg-black opacity-20"></div>
-
+    
     
         <div className='relative flex flex-col items-center justify-center min-h-screen w-full backdrop-blur-md'>
         <img src={logoCFE} alt="Logo CFE" className="w-36 h-auto mt-6 mb-4 md:w-48 md:mt-8 md:mb-5 lg:w-56 lg:mt-10 lg:mb-6" />

@@ -8,7 +8,7 @@ import { Box, IconButton, Tooltip, TextField  } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
 
-import incidentesData from '../services/incidentesData'; 
+import incidentesData from '../services/api/incidentesData'; 
 
 const TablaIncidentes = () => {
   const { 

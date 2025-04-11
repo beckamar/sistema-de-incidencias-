@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import React from 'react'
 import Login from "./pages/auth/Login";
-import Admin from './pages/Admin';
+import Superintendente from './pages/admin/Superintendente';
 import TipoIncidente from './pages/reporte/TipoIncidente';
 import AusenciaPersonal from './pages/reporte/AusenciaPersonal';
 import EquipoTrabajo from './pages/reporte/EquipoTrabajo';
@@ -20,7 +20,7 @@ function App() {
           <Route path='/ausenciapersonal' exact element={<AusenciaPersonal/>}/>
           <Route path='/equipotrabajo' exact element={<EquipoTrabajo/>}/>
           <Route path='/otro' exact element={<Otro/>}/>
-          <Route path='/admin' exact element={<Admin/>}/>
+          <Route path='/admin' exact element={<Superintendente/>}/>
         </Routes> 
       </Router>
 

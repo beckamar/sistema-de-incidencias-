@@ -24,11 +24,10 @@ return (
     onChange={handleChange}
     placeholder={placeholder}
     className={`
-        w-full min-h-[120px] sm:min-h-[150px] 
-          p-3 rounded-lg border-2
-          text-xs font-normal text-gray-500
-          sm:text-base md:text-sm lg:text-base
-          focus:outline-none
+        w-full min-h-[100px] 
+        p-3 rounded-lg border-2
+        text-xs font-normal text-gray-500
+        md:text-sm focus:outline-none
           ${showWarning}`}{...props}
     />
       <div className={`mt-1 text-xs sm:text-sm ${

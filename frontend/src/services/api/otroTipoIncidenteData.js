@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import usePostData from "../hooks/usePostData";
-import { postOtroTipoIncidente } from "../utils/networkData";
+import usePostData from "../../hooks/usePostData";
+import { postOtroTipoIncidente } from "../../utils/networkData";
 
 const otroTipoIncidenteData = () => {
     const {error, executePost} = usePostData(postOtroTipoIncidente);

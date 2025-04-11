@@ -1,4 +1,4 @@
-import ausenciaPersonalData from '../../../services/ausenciaPersonalData';
+import ausenciaPersonalData from '../../../services/api/ausenciaPersonalData';
 import { useState } from 'react';
 import { useLocation} from 'react-router-dom';
 

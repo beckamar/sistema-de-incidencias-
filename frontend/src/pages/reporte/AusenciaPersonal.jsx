@@ -5,9 +5,9 @@ import { useAusenciaPersonalForm } from '../../components/reporte/ausenciaPerson
 export const AusenciaPersonal = () => {
   const form = useAusenciaPersonalForm();
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
+
       <AusenciaPersonalForm {...form}/>
-    </div>
+   
   );
 };
 
