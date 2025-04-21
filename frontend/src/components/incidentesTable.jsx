@@ -6,11 +6,16 @@ import {
 
 import { Box, IconButton, Tooltip, TextField  } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { useLocation } from 'react-router-dom';
 
 
 import incidentesData from '../services/api/incidentesData'; 
 
 const TablaIncidentes = () => {
+
+  const location = useLocation();
+  const { selectedRol, selectedCentro, selectedSubcentro } = location.state;
+
   const { 
     listaIncidentes = [], 
     error, 
@@ -103,15 +108,35 @@ const TablaIncidentes = () => {
   const handleSaveRow = async ({ table, row, values }) => {
     if (values.estado_incidente !== row.original.estado_incidente) {
       const estado = values.estado_incidente === 'Resuelto';
-      const result = await updateStatus(row.original.id_incidente, estado);
+      //const result = await updateStatus(row.original.id_incidente, estado);
     }
     
     table.setEditingRow(null); 
   };
 
+  console.log('selectedRol:', selectedRol);
+  console.log('selectedCentro:', selectedCentro);
+  console.log('selectedSubcentro:', selectedSubcentro);
+  console.log('Lista de icndeintes: ', listaIncidentes);
+  
+
+  const permisos = {
+    1: () => true,
+    2: ({ incidente, centro, subcentro}) =>
+      incidente.id_centrotrabajo == centro &&
+    (subcentro == null || incidente.id_subcentro == subcentro),
+  };
+
+  const filtradoDatos = listaIncidentes.filter(incidente => 
+      permisos[selectedRol]?.({ incidente, centro: selectedCentro, subcentro: selectedSubcentro})
+  );
+
+
+
+
   const table = useMaterialReactTable({
     columns,
-    data: listaIncidentes,
+    data: filtradoDatos,
     enableEditing: true,
     editDisplayMode: 'modal',     
     onEditingRowSave: handleSaveRow,

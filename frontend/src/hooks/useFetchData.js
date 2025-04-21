@@ -23,7 +23,7 @@ const useFetchData = (fetchFunction, dependencies = [], initialFetch = true) => 
         if(initialFetch) {
             fetchData();
         }
-    }, [...dependencies, initialFetch]);
+    }, [fetchData, initialFetch, ...dependencies]);
     return {data, error, fetchData};
 };
 

@@ -5,9 +5,11 @@ export const getIncidentesService = async () =>  {
         SELECT 
         i.id_incidente, 
         ci.tipo AS tipo_incidente, 
+        sc.id AS id_subcentro,
         sc.nombre AS subcentro, 
         TO_CHAR(i.fecha_reporte, 'DD-MM-YYYY') AS fecha_reporte,
         TO_CHAR(i.hora_reporte, 'HH24:MI') AS hora_reporte, 
+        ct.id AS id_centrotrabajo,
         ct.nombre AS centro_trabajo, 
         CASE WHEN 
         i.estado THEN 'Resuelto' ELSE 'Pendiente' END AS estado_incidente, 
