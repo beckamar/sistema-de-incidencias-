@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef  } from 'react';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -9,9 +9,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useLocation } from 'react-router-dom';
 
 
-import incidentesData from '../../../hooks/incidente/incidentesData'; 
+import useIncidentesData from '../../../hooks/incidente/useIncidentesData'; 
 
 const TablaIncidentes = () => {
+  const renderCount = useRef(0);
+  console.log('Render TablaIncidentes:', ++renderCount.current);
 
   const location = useLocation();
   const { selectedRol, selectedCentro, selectedSubcentro } = location.state;
@@ -21,7 +23,7 @@ const TablaIncidentes = () => {
     error, 
     updateStatus,
     isUpdatingStatus 
-  } = incidentesData();
+  } = useIncidentesData();
 
   const columns = useMemo(() => [
     
@@ -108,17 +110,11 @@ const TablaIncidentes = () => {
   const handleSaveRow = async ({ table, row, values }) => {
     if (values.estado_incidente !== row.original.estado_incidente) {
       const estado = values.estado_incidente === 'Resuelto';
-      //const result = await updateStatus(row.original.id_incidente, estado);
+      const result = await updateStatus(row.original.id_incidente, estado);
     }
     
     table.setEditingRow(null); 
   };
-
-  console.log('selectedRol:', selectedRol);
-  console.log('selectedCentro:', selectedCentro);
-  console.log('selectedSubcentro:', selectedSubcentro);
-  console.log('Lista de icndeintes: ', listaIncidentes);
-  
 
   const permisos = {
     1: () => true,
@@ -127,13 +123,14 @@ const TablaIncidentes = () => {
     (subcentro == null || incidente.id_subcentro == subcentro),
   };
 
-  const filtradoDatos = listaIncidentes.filter(incidente => 
-      permisos[selectedRol]?.({ incidente, centro: selectedCentro, subcentro: selectedSubcentro})
+  const filtradoDatos = useMemo(() => 
+    listaIncidentes.filter(incidente => 
+      permisos[selectedRol]?.({ incidente, centro: selectedCentro, subcentro: selectedSubcentro })
+    ),
+    [listaIncidentes, selectedRol, selectedCentro, selectedSubcentro]
   );
 
-
-
-
+  
   const table = useMaterialReactTable({
     columns,
     data: filtradoDatos,

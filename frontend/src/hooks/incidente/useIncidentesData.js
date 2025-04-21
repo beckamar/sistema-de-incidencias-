@@ -2,7 +2,7 @@ import useFetchData from '../useFetchData'
 import { getIncidentes, putStatusIncidente } from '../../services/api/incidentesService'
 import useUpdateData from '../useUpdateData';
 
-const incidentesData = () => {
+const useIncidentesData = () => {
     const {data: listaIncidentes, error: fetchError, fetchData} = useFetchData(getIncidentes);
     const {isUpdating, error: updateError, updateData} = useUpdateData(putStatusIncidente);
 
@@ -25,4 +25,4 @@ const incidentesData = () => {
 
 };
 
-export default incidentesData;
+export default useIncidentesData;
