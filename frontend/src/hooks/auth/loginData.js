@@ -1,6 +1,7 @@
 import { useCallback } from "react";
-import { getCentrostrabajo,getRoles, getSubcentros, login } from "../../utils/networkData.js";   
-import useFetchData from "../../hooks/useFetchData.js";
+import { getCentrostrabajo,getRoles, getSubcentros } from '../../services/api/sedesService.js';  
+import { login } from '../../services/api/authService.js';   
+import useFetchData from "../useFetchData.js";
 
 
 const loginData = () => {

@@ -1,9 +1,9 @@
 import React from 'react';
-import Dropdown from '../ui/Dropdown';
-import Button from '../ui/Button';
-import ErrorMessage from '../ErrorMessage';
-import logoCFE from '/src/assets/logoCFE.png';
-import fondoLogin from '/src/assets/fondoLogin.webp';
+import logoCFE from '../../../../src/assets/logoCFE.png';
+import fondoLogin from '../../../../src/assets/fondoLogin.webp';
+import Dropdown from "../../../components/ui/Dropdown";
+import Button from "../../../components/ui/Button";
+import ErrorMessage from "../../../components/ErrorMessage";
 
 
 const LoginForm = ({ 

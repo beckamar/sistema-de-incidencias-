@@ -1,8 +1,9 @@
 import React from "react";
-import Dropdown from "../../ui/Dropdown";
-import Button from "../../ui/Button";
-import ErrorMessage from "../../ErrorMessage";
-import Header from "../../ui/Header";
+import ErrorMessage from "../../../ErrorMessage";
+import Header from '../../../ui/Header';
+import Button from "../../../ui/Button";
+import Dropdown from "../../../ui/Dropdown";
+
 
 const TiposIncidentesForm = ({opcionesIncidentes, handleTipoIncidenteChange, handleSubmitIniciarIncidente, handleBackLogin, error}) => {
 

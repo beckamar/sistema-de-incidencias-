@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import loginData from '../../services/api/loginData';
+import loginData from '../../../hooks/auth/loginData';
 import { useNavigate } from 'react-router-dom';
 
 

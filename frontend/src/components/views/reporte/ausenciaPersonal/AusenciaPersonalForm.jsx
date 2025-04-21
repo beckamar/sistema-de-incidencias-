@@ -1,13 +1,13 @@
 import React from "react";
-import Header from "../../ui/Header";
-import Dropdown from "../../ui/Dropdown";
-import Button from "../../ui/Button";
-import ErrorMessage from "../../ErrorMessage";
-import { InstructionText } from "../../ui/InstructionText";
-import { Input } from "../../ui/Input";
-import { InputText } from "../../ui/InputText";
-import useSubmitSuccess from "../../../hooks/useSubmitSuccess";
+import Dropdown from "../../../ui/Dropdown";
+import Header from '../../../ui/Header';
+import Button from "../../../ui/Button";
+import { InstructionText } from '../../../ui/InstructionText';
+import { Input } from '../../../ui/Input';
+import { InputText } from '../../../ui/InputText';
 
+import useSubmitSuccess from '../../../../hooks/useSubmitSuccess';
+import ErrorMessage from "../../../ErrorMessage";
 
 const AusenciaPersonalForm = ({opcionesAusencias, handleTipoAusenciasChange, submitSuccess, descripcion, handleDescripcion, clave, handleClaveChange, nombreCompleto, handleEmpleadoChange, handleSubmitReporteAusencia, error}) => {
 

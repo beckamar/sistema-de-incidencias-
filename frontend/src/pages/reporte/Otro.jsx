@@ -1,6 +1,6 @@
 import React from 'react'
-import IncidenteOtroForm from "../../components/reporte/otro/IncidenteOtroForm.jsx";
-import {useIncidenteOtroForm} from "../../components/reporte/otro/useIncidenteOtroForm.js";
+import IncidenteOtroForm from "../../components/views/reporte/otro/IncidenteOtroForm.jsx";
+import {useIncidenteOtroForm} from "../../components/views/reporte/otro/useIncidenteOtroForm.js";
 
 
 export const Otro = () => {

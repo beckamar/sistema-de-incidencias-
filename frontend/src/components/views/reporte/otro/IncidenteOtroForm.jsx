@@ -1,11 +1,12 @@
 import React from 'react'
-import Header from '../../ui/Header'
-import { InstructionText } from '../../ui/InstructionText';
-import { Input } from '../../ui/Input';
-import { InputText } from '../../ui/InputText';
-import useSubmitSuccess from '../../../hooks/useSubmitSuccess';
-import ErrorMessage from "../../ErrorMessage";
-import Button from "../../ui/Button";
+import Header from '../../../ui/Header';
+import Button from "../../../ui/Button";
+import { InstructionText } from '../../../ui/InstructionText';
+import { Input } from '../../../ui/Input';
+import { InputText } from '../../../ui/InputText';
+
+import useSubmitSuccess from '../../../../hooks/useSubmitSuccess';
+import ErrorMessage from "../../../ErrorMessage";
 
 
 const IncidenteOtroForm = ({tipo, descripcion, handleTipoIncidente, handleDescripcion, handleSubmitIncidenteOtro, submitSuccess, error}) => {

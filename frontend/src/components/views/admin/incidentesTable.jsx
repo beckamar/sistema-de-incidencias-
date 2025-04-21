@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useLocation } from 'react-router-dom';
 
 
-import incidentesData from '../services/api/incidentesData'; 
+import incidentesData from '../../../hooks/incidente/incidentesData'; 
 
 const TablaIncidentes = () => {
 

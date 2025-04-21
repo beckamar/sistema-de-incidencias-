@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useTiposIncidenteData from '../../../services/api/tiposIncidenteData';
+import useTiposIncidenteData from '../../../../hooks/reporte/tiposIncidenteData';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 export const useTiposIncidentesForm = () =>{

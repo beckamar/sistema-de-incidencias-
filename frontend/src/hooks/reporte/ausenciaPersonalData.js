@@ -1,7 +1,7 @@
 import { useCallback } from "react";
-import usePostData from "../../hooks/usePostData"
-import { getTiposAusenciaPersonal, postempleado, postReporteAusencia } from "../../utils/networkData"
-import useFetchData from "../../hooks/useFetchData";
+import usePostData from "../usePostData"
+import { getTiposAusenciaPersonal, postempleado, postReporteAusencia } from './../../services/api/ausenciaPersonalService.js'
+import useFetchData from "../useFetchData";
 
 
 

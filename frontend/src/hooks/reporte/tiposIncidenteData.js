@@ -1,5 +1,5 @@
-import { getTiposIncidentes, iniciarReporte } from "../../utils/networkData.js";
-import useFetchData from "../../hooks/useFetchData.js";
+import { getTiposIncidentes, iniciarReporte } from '../../services/api/incidentesService.js';
+import useFetchData from "../useFetchData.js";
 import { useCallback } from "react";
 
 
