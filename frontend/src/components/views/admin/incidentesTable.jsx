@@ -1,29 +1,26 @@
-import React, { useMemo, useRef  } from 'react';
-import {
-  MaterialReactTable,
-  useMaterialReactTable,
-} from 'material-react-table';
-
-import { Box, IconButton, Tooltip, TextField  } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import { useLocation } from 'react-router-dom';
-
-
+import React, { useMemo} from 'react';
+import { MaterialReactTable, useMaterialReactTable} from 'material-react-table';
+import dayjs from 'dayjs';
+import { Box, TextField  } from '@mui/material';
+import { FaArrowLeft } from 'react-icons/fa';
+import { useLocation,  useNavigate  } from 'react-router-dom';
+import { IconButton } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import useIncidentesData from '../../../hooks/incidente/useIncidentesData'; 
+import useIncidentesTable from './useIncidentesTable';
+
 
 const TablaIncidentes = () => {
-  const renderCount = useRef(0);
-  console.log('Render TablaIncidentes:', ++renderCount.current);
-
+  const navigate = useNavigate();
   const location = useLocation();
   const { selectedRol, selectedCentro, selectedSubcentro } = location.state;
-
   const { 
     listaIncidentes = [], 
     error, 
     updateStatus,
     isUpdatingStatus 
   } = useIncidentesData();
+  const {filtradoDatos} = useIncidentesTable({listaIncidentes, selectedRol, selectedCentro, selectedSubcentro});
 
   const columns = useMemo(() => [
     
@@ -73,7 +70,7 @@ const TablaIncidentes = () => {
     {
       accessorKey: 'fecha_reporte',
       header: 'Fecha Reporte',
-      Cell: ({ cell }) => new Date(cell.getValue()).toLocaleDateString(),
+      Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY'),
       enableEditing: false,
     },
     {
@@ -112,25 +109,10 @@ const TablaIncidentes = () => {
       const estado = values.estado_incidente === 'Resuelto';
       const result = await updateStatus(row.original.id_incidente, estado);
     }
-    
     table.setEditingRow(null); 
   };
 
-  const permisos = {
-    1: () => true,
-    2: ({ incidente, centro, subcentro}) =>
-      incidente.id_centrotrabajo == centro &&
-    (subcentro == null || incidente.id_subcentro == subcentro),
-  };
 
-  const filtradoDatos = useMemo(() => 
-    listaIncidentes.filter(incidente => 
-      permisos[selectedRol]?.({ incidente, centro: selectedCentro, subcentro: selectedSubcentro })
-    ),
-    [listaIncidentes, selectedRol, selectedCentro, selectedSubcentro]
-  );
-
-  
   const table = useMaterialReactTable({
     columns,
     data: filtradoDatos,
@@ -146,6 +128,16 @@ const TablaIncidentes = () => {
         color: 'white',
       },
     },
+    renderTopToolbarCustomActions: () => (
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 2 }, pl: 1, py: 0.5 }}>
+        <IconButton
+          onClick={() => navigate('/login')} 
+          size="small"
+          >
+          <ArrowBackIcon fontSize="small" />
+        </IconButton>
+      </Box>
+    ),
     muiToolbarAlertBannerProps: error
       ? {
           color: 'error',
