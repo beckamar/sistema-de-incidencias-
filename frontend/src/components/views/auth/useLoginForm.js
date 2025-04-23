@@ -12,7 +12,6 @@ export const useLoginForm = () => {
     const navigate = useNavigate();
 
 
-
     const handleRolChange = (e) => {
         const rolId = e.target.value;
         setSelectedRol(rolId);
@@ -63,8 +62,6 @@ export const useLoginForm = () => {
             }else{
                 navigate('/tipoincidente', { replace: true, state:{id_centrotrabajo: selectedCentro,  id_subcentro: selectedSubcentro} });
             }
-
-
         } catch (err) {
             setError(err.message);
             
