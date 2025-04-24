@@ -4,10 +4,16 @@ import express from "express";
 import cors from "cors";
 import errorHandling from "./src/middlewares/errorHandler.js";
 import v1Router from "./src/v1/v1Routes.js";
+import firebaseRoute from "./src/v1/FirebaseRoute.js";
+import bodyParser from "body-parser";
+
 
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+app.use(bodyParser.json());
+app.use("/api/firebase", firebaseRoute)
 
 app.use(express.json());
 app.use(cors());
