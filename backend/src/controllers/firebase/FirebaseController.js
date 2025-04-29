@@ -1,14 +1,39 @@
+import admin from "../../utils/firebaseUtils.js";
 import NotificationService from "../../services/firebase/NotificationService.js";
+import handleResponse from '../../middlewares/responseHandler.js';
 
-const sendFirebaseNotification = async (req, res) => {
+export const sendFirebaseNotification = async (req, res) => {
     try {
-        const {title, body, deviceToken} = req.body;
-        await NotificationService.sendNotification(deviceToken, title, body);
-        res.status(200).json({message: "Notification sent successfully ", success:true});
+        const { title, body } = req.body;
+        
+        const response = await NotificationService.sendNotification(title, body);
+        handleResponse(res, 200, "Notificación enviada exitosamente", response);
 
-    } catch (error) {
-        res.status(500).json({message: "Error sending notification, ", success:false});
+    }catch (error) {
+        handleResponse(res, 500, "Error al enviar la notificación", { error: error.message});
     }
 }
 
-export default sendFirebaseNotification;
+
+export const subscribeToTopic = async(req, res) => {
+    const { token } = req.body;
+    try {
+        await admin.messaging().subscribeToTopic([token], 'incidentes');
+        handleResponse(res, 200, "Token suscrito exitosamente al topic 'incidentes'");
+    } catch (error) {
+        handleResponse(res, 500, "Error al suscribirse al topic", { error: error.message});
+    }
+};
+
+export const unsubscribeToTopic = async(req, res) => {
+    const { token } = req.body;
+
+    try {
+        await admin.messaging().unsubscribeFromTopic([token], 'incidentes');
+        handleResponse(res, 200, "Token removido exitosamente del topic 'incidentes'");
+    } catch (error) {
+        handleResponse(res, 500, "Error al remover token del topic", { error: error.message });
+    }
+
+};
+

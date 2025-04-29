@@ -5,7 +5,7 @@ import cors from "cors";
 import errorHandling from "./src/middlewares/errorHandler.js";
 import v1Router from "./src/v1/v1Routes.js";
 import bodyParser from "body-parser";
-import FirebaseRoute from "./src/v1/FirebaseRoute.js  "
+import FirebaseRoute from "./src/v1/FirebaseRoute.js"
 
 
 const app = express();
