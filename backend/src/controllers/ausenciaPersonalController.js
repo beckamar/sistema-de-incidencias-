@@ -27,6 +27,7 @@ export const postReporteAusencia = async(req, res) => {
 
         const message = {
             notification: {
+                title: 'Nuevo reporte',
                 body: `Ausencia de personal`,
             },
             topic: 'incidentes', 

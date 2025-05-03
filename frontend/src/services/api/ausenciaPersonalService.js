@@ -4,7 +4,7 @@ import axiosInstance from '../axiosInstance';
 
 export async function postempleado(nombre_completo, clave){
     try {
-        const response = await axiosInstance.post("/api/v1/empleados", {
+        const response = await axiosInstance.post("/v1/empleados", {
             nombre_completo,
             clave
         });
@@ -17,7 +17,7 @@ export async function postempleado(nombre_completo, clave){
 
 export async function getTiposAusenciaPersonal() {
     try {
-        const response = await axiosInstance.get("/api/v1/ausenciapersonal/tipos");
+        const response = await axiosInstance.get("/v1/ausenciapersonal/tipos");
         return { error: false, data: response.data.data };                
     } catch (error) {
         return { error: true, data: error.response?.data?.msg || "Error al obtener los tipos de ausencias de personal"};        
@@ -26,7 +26,7 @@ export async function getTiposAusenciaPersonal() {
 
 export async function postReporteAusencia(id_incidente, id_empleado, id_catalogoAusencias, descripcion){
     try {
-        const response = await axiosInstance.post("/api/v1/ausenciapersonal", {
+        const response = await axiosInstance.post("/v1/ausenciapersonal", {
             id_incidente,
             id_empleado,
             id_catalogoAusencias,

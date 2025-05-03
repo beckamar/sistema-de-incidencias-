@@ -9,6 +9,7 @@ export const postOtroTpoIncidente = async(req, res) => {
 
         const message = {
             notification: {
+                title: 'Nuevo reporte',
                 body: `${tipo}`,
             },
             topic: 'incidentes', 

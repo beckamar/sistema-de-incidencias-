@@ -25,7 +25,7 @@ export async function fetchFCMToken(setFcmToken) {
 
 export const subscribeToTopic = async (token) => {
   try {
-    const response = await axiosInstance.post("/api/firebase/subscribeToTopic", { token });
+    const response = await axiosInstance.post("/firebase/subscribeToTopic", { token });
     console.log("Suscripción al tópico exitosa:", response.data);
   } catch (error) {
     console.error("Error al suscribirse al topic:", error);

@@ -30,16 +30,6 @@ export const getIncidentes = async (req, res, next) => {
     }
 };
 
-export const getIncidenteId = async (req, res, next) => {
-    try{
-        const incidente = await getIncidenteIdService(req.params.id_incidente);
-        if(!incidente) return handleResponse(res, 404, "incidente no encontrado");
-        handleResponse(res, 200, "Incidente encontrado",incidente);
-    }catch(err){
-        handleResponse(res, 500, "Error al obtener el Status del incidente", { error: err.message});
-    }
-};
-
 
 export const putStatusIncidente = async (req, res, next) => {
     const {estado} = req.body;
