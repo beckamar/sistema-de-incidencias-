@@ -42,7 +42,7 @@ export const useTiposIncidentesForm = () =>{
                         
             const routes = {
                 1: '/ausenciapersonal',
-                2: '/equipotrabajo',
+                2: '/vehiculoeh',
                 3: '/otro'
             };
 

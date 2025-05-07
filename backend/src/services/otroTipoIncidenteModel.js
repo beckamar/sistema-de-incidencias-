@@ -1,8 +1,9 @@
 import pool from "../database/db.js";
 
-export const getOtroTipoIncidente = async(id_otro) => {
-
-}
+export const getOtroTipoIncidenteService = async () => {
+    const result = await pool.query('SELECT * FROM incidente_otro;');
+    return result.rows;
+};
 
 export const postOtroTipoIncidenteService = async (id_incidente, tipo, descripcion) => {
 

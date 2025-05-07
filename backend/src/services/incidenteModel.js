@@ -65,7 +65,6 @@ export const postIncidenteService = async (id_catalogoincidentes,id_centrotrabaj
 };
 
 
-
 export const putStatusIncidenteService = async (id_incidente, estado) =>  {
     const result = await pool.query('UPDATE incidente SET estado = $1 WHERE id_incidente=$2 RETURNING *',[estado, id_incidente]);
         return result.rows[0];
@@ -77,7 +76,8 @@ export const getTiposIncidentesService = async () => {
         id_catincidentes,
         tipo
         FROM
-        catalogo_incidentes;
+        catalogo_incidentes 
+        ORDER BY id_catincidentes;
     `);
     return result.rows;
 };
