@@ -21,11 +21,11 @@ const AusenciaPersonalForm = ({opcionesAusencias, handleTipoAusenciasChange, sub
 
                 <form className="w-full max-w-xs sm:max-w-sm md:max-w-md pt-10 pb-6 flex flex-col" onSubmit={handleSubmitReporteAusencia}>
                     
-                    <InstructionText label="Nombre completo"/>
-                    <Input value={nombreCompleto} onChange={handleEmpleadoChange} placeholder="Ejemplo: Ana Maria Perez Garcia" className={"mb-4 sm:mb-6 md:mb-8 lg:mb-10"} />
-
                     <InstructionText label="RPE || RTT"/>
                     <Input value={clave} onChange={handleClaveChange} className={"mb-4 sm:mb-6 md:mb-8 lg:mb-10"}/>
+
+                    <InstructionText label="Nombre completo"/>
+                    <Input value={nombreCompleto} onChange={handleEmpleadoChange} placeholder="Ejemplo: Ana Maria Perez Garcia" className={"mb-4 sm:mb-6 md:mb-8 lg:mb-10"} />
 
                     <InstructionText label="Tipo de ausencia"/>
                     <Dropdown

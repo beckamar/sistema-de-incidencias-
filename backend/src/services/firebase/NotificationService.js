@@ -1,21 +1,26 @@
-import admin from "../../utils/firebase.js";
+import admin from "../../utils/firebaseUtils.js";
 
 class NotificationService {
-    static async sendNotification(deviceToken, title, body){
+    static async sendNotification(title, body){
         const message = {
+            topic: "incidentes",
             notification: {
-                title, body
+                title: "Nuevo Reporte",
+                body
             },
-            token:deviceToken
-
+            webpush: {
+                fcm_options: {
+                    link: "https://" 
+                }
+            }
         };
+        console.log("Mensaje a enviar:", message);
         try {
             const response = await admin.messaging().send(message);
             return response;
         } catch (error) {
             throw error;
         }
-
     }
 };
 

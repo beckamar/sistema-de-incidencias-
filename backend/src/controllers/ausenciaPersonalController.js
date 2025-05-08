@@ -1,5 +1,6 @@
 import { getTiposAusenciaService, postReporteAusenciaService } from "../services/ausenciaPersonalModel.js";
 import handleResponse from "../middlewares/responseHandler.js";
+import admin from "../utils/firebaseUtils.js";
 
 
 
@@ -19,11 +20,23 @@ export const postReporteAusencia = async(req, res) => {
             id_incidente,
             id_empleado,
             id_catalogoAusencias,
-            descripcion
+            descripcion, 
         } = req.body;
 
         const crearReporteAusencia = await postReporteAusenciaService(id_incidente, id_empleado, id_catalogoAusencias, descripcion);
+
+        const message = {
+            notification: {
+                title: 'Nuevo reporte',
+                body: `Ausencia de personal`,
+            },
+            topic: 'incidentes', 
+        };
+        await admin.messaging().send(message);
+
         handleResponse(res, 200, "Reporte por Ausencia creado", crearReporteAusencia);
+
+
     } catch (error){
         handleResponse(res, 500, "Error al crear reporte por ausencia", { error: error.message});
     }

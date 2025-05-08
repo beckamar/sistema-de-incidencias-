@@ -55,7 +55,7 @@ export const useAusenciaPersonalForm = () => {
         }    
 
         try {
-            setIsSubmitting(true);
+            setIsSubmitting(true);            
 
             const {success: empleadoSuccess, empleado, error: empleadoError} = await postEmpleado(nombreCompleto, clave);
             if (!empleadoSuccess) throw new Error(empleadoError);

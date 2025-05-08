@@ -2,7 +2,7 @@ import axiosInstance from "../axiosInstance";
 
 export async function getIncidentes(){
     try {
-        const response = await axiosInstance.get("/api/v1/incidentes");
+        const response = await axiosInstance.get("/v1/incidentes");
         return { error: false, data: response.data.data };                
     } catch (error) {
         return { error: true, data: error.response?.data?.msg || "Error al obtener la lista de incidentes"};        
@@ -11,7 +11,7 @@ export async function getIncidentes(){
 
 export async function putStatusIncidente(id_incidente, estado){
     try {
-        const response = await axiosInstance.put(`/api/v1/incidentes/${id_incidente}`,{
+        const response = await axiosInstance.put(`/v1/incidentes/${id_incidente}`,{
             estado: estado
         });
         return {error: false, data: response.data.data};
@@ -24,7 +24,7 @@ export async function putStatusIncidente(id_incidente, estado){
 
 export async function getTiposIncidentes(){
     try {
-        const response = await axiosInstance.get("/api/v1/incidentes/tipos");
+        const response = await axiosInstance.get("/v1/incidentes/tipos");
         return { error: false, data: response.data.data };
     } catch (error) {
         return { error: true, data: error.response?.data?.msg || "Error al obtener los tipos de incidentes"};        
@@ -33,7 +33,7 @@ export async function getTiposIncidentes(){
 
 export async function iniciarReporte(id_catincidentes,id_centrotrabajo, id_subcentro){
     try {
-        const response = await axiosInstance.post("/api/v1/incidentes",{
+        const response = await axiosInstance.post("/v1/incidentes",{
             id_catincidentes,
             id_centrotrabajo,
             id_subcentro
@@ -43,3 +43,8 @@ export async function iniciarReporte(id_catincidentes,id_centrotrabajo, id_subce
         return { error: true, data: error.response?.data?.msg || "Error al iniciar la creacion de un reporte"};          
     }
 };
+
+
+
+
+

@@ -1,5 +1,5 @@
 import React from 'react';
-import logoCFE from '../../../../src/assets/logoCFE.png';
+import logoCFE from '../../../../src/assets/logoCFE.webp';
 import fondoLogin from '../../../../src/assets/fondoLogin.webp';
 import Dropdown from "../../../components/ui/Dropdown";
 import Button from "../../../components/ui/Button";
