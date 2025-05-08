@@ -29,7 +29,7 @@ const VehiculoERForm = ({categorias, handleCategoriasChange, submitSuccess, desc
                         onChange={handleCategoriasChange} 
                     />
 
-                    <InstructionText label="Económico"/>
+                    <InstructionText label="Económico"  className={"mt-4"}/>
                     <Input value={clave} onChange={handleClaveChange} className={"mb-4 sm:mb-6 md:mb-8 lg:mb-10"}/>
 
                     <InstructionText label="Descripción || Observación" className={"mt-4 sm:mt-6 md:mt-8 lg:mt-10"}/>
