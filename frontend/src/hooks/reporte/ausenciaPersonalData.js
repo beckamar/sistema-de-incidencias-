@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import usePostData from "../usePostData"
-import { getTiposAusenciaPersonal, postempleado, postReporteAusencia } from './../../services/api/ausenciaPersonalService.js'
+import { getTiposAusenciaPersonal, postempleado, postReporteAusencia, consultarRPE } from './../../services/api/ausenciaPersonalService.js'
 import useFetchData from "../useFetchData";
 
 
@@ -22,6 +22,18 @@ const ausenciaPersonalData = () => {
     }, [executePost, error]);
 
 
+    const consultarRPEempleado = useCallback(async (rpe) => {
+        try {
+            const {error: apiError, data } = await consultarRPE(rpe);
+            if (apiError || !data) { throw new Error(apiError ? data : "Error en la API");}
+            return { success: true, empleado: data };
+            
+        } catch (error) {
+            return { success: false, error: error.message || "Error consultando RPE" };
+        }
+    }, []);
+
+
 
     const fetchReporteAusencia = useCallback(async(id_incidente, id_empleado, id_catalogoAusencias, descripcion) => {
         try {
@@ -39,6 +51,7 @@ const ausenciaPersonalData = () => {
         empleado: data,
         empleadoError : error,
         postEmpleado,
+        consultarRPEempleado,
 
         tiposAusencias,
         tiposAusenciasError,

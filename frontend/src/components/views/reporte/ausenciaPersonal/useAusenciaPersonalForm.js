@@ -4,7 +4,7 @@ import { useLocation} from 'react-router-dom';
 
 
 export const useAusenciaPersonalForm = () => {
-    const { tiposAusencias, tiposAusenciasError, postEmpleado, fetchReporteAusencia} = ausenciaPersonalData();
+    const { tiposAusencias, tiposAusenciasError, postEmpleado, fetchReporteAusencia, consultarRPEempleado} = ausenciaPersonalData();
     const [selectedTipoAusencia, setSelectedTipoAusencia] = useState(null);
     const [descripcion, setDescripcion] = useState("");
     const [clave, setClaveChange] = useState("");

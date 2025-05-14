@@ -1,6 +1,6 @@
 import React from 'react';
 import VehiculoERForm from '../../components/views/reporte/vehiculoEH/VehiculoEHForm';
-import { useVehiculoERForm } from '../../components/views/reporte/vehiculoEH/useVehiculoEH';
+import { useVehiculoERForm } from '../../components/views/reporte/vehiculoEH/useVehiculoEHForm';
 
 export const VehiculoEH = () => {
   const form = useVehiculoERForm();

@@ -1,12 +1,13 @@
 import express from "express";
-import { getEmpleados, postEmpleado } from "../../controllers/empleadoController.js";
+import { getEmpleados, postEmpleado, postClave } from "../../controllers/empleadoController.js";
 
 const router = express.Router();
 
 
 router
     .get("/", getEmpleados)
-    .post("/", postEmpleado);
+    .post("/", postEmpleado)
+    .post("/rpe", postClave);
 
 
 export default router;

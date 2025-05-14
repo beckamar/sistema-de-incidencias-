@@ -15,6 +15,20 @@ export async function postempleado(nombre_completo, clave){
     }
 };
 
+export async function consultarRPE(rpe){
+    try {
+        const response = await axiosInstance.post("/v1/empleados/rpe", {
+            rpe:rpe
+        });
+        return { error: false, data: response.data.data };        
+        
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al consultar la clave del trabajador"};                
+    };
+}
+
+
+
 export async function getTiposAusenciaPersonal() {
     try {
         const response = await axiosInstance.get("/v1/ausenciapersonal/tipos");
