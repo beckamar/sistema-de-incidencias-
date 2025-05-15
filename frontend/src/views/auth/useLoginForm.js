@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import loginData from '../../../hooks/auth/loginData';
+import loginData from '../../hooks/auth/loginData';
 import { useNavigate } from 'react-router-dom';
 
 

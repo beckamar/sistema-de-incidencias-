@@ -1,6 +1,6 @@
 import React from 'react'
-import AusenciaPersonalForm from '../../components/views/reporte/ausenciaPersonal/AusenciaPersonalForm';
-import { useAusenciaPersonalForm } from '../../components/views/reporte/ausenciaPersonal/useAusenciaPersonalForm';
+import AusenciaPersonalForm from '../../views/reporte/ausenciaPersonal/AusenciaPersonalForm';
+import { useAusenciaPersonalForm } from '../../views/reporte/ausenciaPersonal/useAusenciaPersonalForm';
 
 export const AusenciaPersonal = () => {
   const form = useAusenciaPersonalForm();

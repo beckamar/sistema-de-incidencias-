@@ -1,13 +1,13 @@
 import React from "react";
-import Dropdown from "../../../ui/Dropdown";
-import Header from '../../../ui/Header';
-import Button from "../../../ui/Button";
-import { InstructionText } from '../../../ui/InstructionText';
-import { Input } from '../../../ui/Input';
-import { InputText } from '../../../ui/InputText';
+import Dropdown from "../../../components/ui/Dropdown";
+import Header from '../../../components/ui/Header';
+import Button from "../../../components/ui/Button";
+import { InstructionText } from '../../../components/ui/InstructionText';
+import { Input } from '../../../components/ui/Input';
+import { InputText } from '../../../components/ui/InputText';
 
-import useSubmitSuccess from '../../../../hooks/useSubmitSuccess';
-import ErrorMessage from "../../../ErrorMessage";
+import useSubmitSuccess from '../../../hooks/useSubmitSuccess';
+import ErrorMessage from "../../../components/ErrorMessage";
 
 
 const VehiculoERForm = ({categorias, handleCategoriasChange, submitSuccess, descripcion, handleDescripcion, clave, handleClaveChange, handleSubmitReporteVehiculoEH, error}) => {

@@ -1,5 +1,5 @@
 import React from "react";
-import TablaIncidentes from "../../components/views/admin/incidentesTable.jsx";
+import TablaIncidentes from "../../views/admin/incidentesTable.jsx";
 
 const Admin = () => {
 

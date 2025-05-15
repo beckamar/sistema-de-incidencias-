@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { Box, TextField, IconButton } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useLocation, useNavigate } from 'react-router-dom';
-import useIncidentesData from '../../../hooks/incidente/useIncidentesData';
+import useIncidentesData from '../../hooks/incidente/useIncidentesData';
 import useIncidentesTable from './useIncidentesTable';
 
 const TablaIncidentes = () => {

@@ -1,4 +1,4 @@
-import ausenciaPersonalData from '../../../../hooks/reporte/ausenciaPersonalData';
+import ausenciaPersonalData from '../../../hooks/reporte/ausenciaPersonalData';
 import { useState } from 'react';
 import { useLocation} from 'react-router-dom';
 

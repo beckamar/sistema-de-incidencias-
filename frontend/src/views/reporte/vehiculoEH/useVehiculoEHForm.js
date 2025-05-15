@@ -1,4 +1,4 @@
-import vehiculoEHData from '../../../../hooks/reporte/vehiculoEHData';
+import vehiculoEHData from '../../../hooks/reporte/vehiculoEHData';
 import { useState } from 'react';
 import { useLocation} from 'react-router-dom';
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { useTiposIncidentesForm } from "../../components/views/reporte/tipo/useTiposIncidentesForm.js";
-import TiposIncidentesForm from "../../components/views/reporte/tipo/TiposIncidentesForm.jsx";
+import { useTiposIncidentesForm } from "../../views/reporte/tipo/useTiposIncidentesForm.js";
+import TiposIncidentesForm from "../../views/reporte/tipo/TiposIncidentesForm.jsx";
 
 
 const TipoIncidente = () => {
