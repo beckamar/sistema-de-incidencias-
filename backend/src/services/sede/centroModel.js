@@ -1,7 +1,7 @@
 import pool from "../../database/db.js";
 
 
-export const getIdCentroTrabajoService  = async(id) => {
+export const getIdCentroTrabajoRolService  = async(id) => {
    const result = await pool.query(`     
       SELECT 
       *
@@ -14,23 +14,12 @@ export const getIdCentroTrabajoService  = async(id) => {
    return result.rows; 
 };
 
-export const getCentrosSubcentrosService = async () => {
+export const getCentrosTrabajoService = async() => {
    const result = await pool.query(`
-      SELECT 
-      ct.id AS centro_id,
-      ct.nombre AS centro_nombre,
-      (SELECT json_agg(
-         json_build_object (
-            'id', sct.id,
-            'nombre', sct.nombre
-            )
-         )
-      FROM subcentro_trabajo AS sct WHERE sct.id_centrotrabajo = ct.id
-      )
-      AS subcentros 
-      FROM centro_trabajo ct
-      ORDER BY ct.nombre;
-      `
-   );
-   return result.rows;
+      SELECT * FROM centro_trabajo;
+      `);
+      return result.rows;
 };
+
+
+

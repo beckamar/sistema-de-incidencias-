@@ -1,12 +1,12 @@
 import { useCallback } from "react";
-import { getCentrostrabajo,getRoles, getSubcentros } from '../../services/api/sedesService.js';  
+import { getCentrostrabajoRol,getRoles, getSubcentros } from '../../services/api/sedesService.js';  
 import { login } from '../../services/api/authService.js';   
 import useFetchData from "../useFetchData.js";
 
-
+//obtencion de centros y/o subcentro por rol
 const loginData = () => {
     const {data: roles, error: rolesError } = useFetchData(getRoles);
-    const {data: centros, error: centrosError, fetchData: fetchCentros} = useFetchData(getCentrostrabajo, [], false);
+    const {data: centros, error: centrosError, fetchData: fetchCentros} = useFetchData(getCentrostrabajoRol, [], false);
     const {data: subcentros, error: subcentrosError, fetchData: fetchSubcentros} = useFetchData(getSubcentros, [], false);
 
     const fetchSubmit = useCallback (async (selectedRol, selectedCentro, selectedSubcentros) => {

@@ -10,7 +10,7 @@ export async function getRoles() {
     }
 }
 
-export async function getCentrostrabajo(id_rol) {
+export async function getCentrostrabajoRol(id_rol) {
     try {
         console.log("EL id de id_rol:", id_rol);
         const response = await axiosInstance.get(`/v1/sedes/${id_rol}/centros`);
@@ -26,4 +26,14 @@ export async function getSubcentros(id_centro) {
         return { error: false, data: response.data.data };
     } catch ( error ) {  
         return { error: true, data: error.response?.data?.msg || "Error al obtener subcentros" };    }
+}
+
+
+export async function getCentros() {
+    try {
+        const response = await axiosInstance.get("v1/sedes/centros");
+        return {error:false, data: response.data.data};
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al obtener los centros relacionados" };       
+    }
 }

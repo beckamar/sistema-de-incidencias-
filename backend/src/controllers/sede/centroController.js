@@ -1,21 +1,21 @@
 import handleResponse from '../../middlewares/responseHandler.js';
-import { getCentrosSubcentrosService, getIdCentroTrabajoService } from '../../services/sede/centroModel.js';
+import { getCentrosTrabajoService, getIdCentroTrabajoRolService } from '../../services/sede/centroModel.js';
 
 
-export const getIdCentroTrabajo = async(req, res) =>{
+export const getIdCentroTrabajoRol = async(req, res) =>{
     try {
-        const IdCentroTrabajo = await getIdCentroTrabajoService(req.params.id_rol);
+        const IdCentroTrabajo = await getIdCentroTrabajoRolService(req.params.id_rol);
         handleResponse(res, 200, "centros obtenidos por rol",IdCentroTrabajo);
     } catch (error) {
         handleResponse(res, 500, "Error al obtener los centros de trabajo por rol", { error: error.message});
     }
 };
 
-export const getCentrosSubcentros = async (req, res) => {
+export const getCentrosTrabajo = async (req, res) => {
     try {
-        const obtenerCentroSubcentros = await getCentrosSubcentrosService();
-        handleResponse(res, 200, "Centros y subcentros relacionados obtenidos correctamente", obtenerCentroSubcentros);
+        const obtenerCentros = await getCentrosTrabajoService();
+        handleResponse(res, 200, "Centros obtenidos correctamente", obtenerCentros);
     } catch (error) {
-        handleResponse(res, 500, "Error al obtener los centros y subcentros", {error: error.message});
+        handleResponse(res, 500, "Error al obtener los centros", {error: error.message});
     }
 };
