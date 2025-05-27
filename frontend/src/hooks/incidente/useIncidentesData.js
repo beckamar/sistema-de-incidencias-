@@ -1,13 +1,14 @@
 import useFetchData from '../useFetchData'
-import { getIncidentes, putStatusIncidente } from '../../services/api/incidentesService'
+import { getIncidentes, getStatus, putStatusIncidente } from '../../services/api/incidentesService'
 import useUpdateData from '../useUpdateData';
 
 const useIncidentesData = () => {
     const {data: listaIncidentes, error: fetchError, fetchData} = useFetchData(getIncidentes);
+    const {data: listaStatus, error: statusError} = useFetchData(getStatus);
     const {isUpdating, error: updateError, updateData} = useUpdateData(putStatusIncidente);
 
-    const updateStatus = async (id_incidente, estado) => {
-        const result = await updateData(id_incidente, estado);
+    const updateStatus = async (id_incidente, id_estado) => {
+        const result = await updateData(id_incidente, id_estado);
         if(result.success){
             await fetchData();
         }
@@ -20,6 +21,8 @@ const useIncidentesData = () => {
         fetchError,
         isUpdatingStatus: isUpdating,
         updateError,
+        listaStatus,
+        statusError,
         updateStatus
     };
 

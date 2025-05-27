@@ -12,8 +12,8 @@ export async function getRoles() {
 
 export async function getCentrostrabajoRol(id_rol) {
     try {
-        console.log("EL id de id_rol:", id_rol);
         const response = await axiosInstance.get(`/v1/sedes/${id_rol}/centros`);
+        console.log("EL id de id_rol:",response.data.data );
         return { error: false, data: response.data.data};
     } catch ( error ) {  
         return { error: true, data: error.response?.data?.msg || "Error al obtener centros de trabajo" };    }

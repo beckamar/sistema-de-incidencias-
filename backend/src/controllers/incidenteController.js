@@ -1,4 +1,4 @@
-import { putStatusIncidenteService, getIncidenteIdService, getIncidentesService, getTiposIncidentesService, postIncidenteService } from "../services/incidenteModel.js";
+import { putStatusIncidenteService, getIncidenteIdService, getIncidentesService, getTiposIncidentesService, postIncidenteService, getStatusServices } from "../services/incidenteModel.js";
 import handleResponse from '../middlewares/responseHandler.js';
 
 
@@ -23,7 +23,9 @@ export const postIncidente = async (req, res, next) => {
 
 export const getIncidentes = async (req, res, next) => {
     try{
-        const incidentes = await getIncidentesService()
+        console.log("Query params:", req.query); 
+        const { id_estado, id_centrotrabajo, id_subcentro } = req.query;
+        const incidentes = await getIncidentesService({id_estado, id_centrotrabajo, id_subcentro});
         handleResponse(res, 200, "Incidentes obtenidos",incidentes);
     }catch(err){
         next(err);
@@ -38,16 +40,26 @@ export const putStatusIncidente = async (req, res, next) => {
         if(!incidenteActualizado) return handleResponse(res, 404, "incidente no encontrado");
         handleResponse(res, 200, "Incidente actualizado", incidenteActualizado);
     } catch (error) {
+        handleResponse(res, 500, "Error al actualizar el Status del incidente", { error: error.message});
+    }
+};
+
+
+export const getStatus = async (req, res) => {
+    try {
+        const obtenerStatus = await getStatusServices();
+        handleResponse(res, 200, "Estados obtenidos correctamente", obtenerStatus);
+    } catch (error) {
         handleResponse(res, 500, "Error al obtener el Status del incidente", { error: error.message});
     }
 };
 
 
-export const getTiposIncidentes = async (req, res, next) => {
+export const getTiposIncidentes = async (req, res) => {
     try {
         const tiposIncidentes = await getTiposIncidentesService();
         handleResponse(res, 200, "Tipo de incidentes obtenidos",tiposIncidentes);
     } catch (error) {
-        next(err);
+        handleResponse(res, 500, "Error al obtener los tipos de incidentes", { error: error.message});
     }
 };

@@ -1,13 +1,19 @@
+import { data } from "react-router-dom";
 import axiosInstance from "../axiosInstance";
 
-export async function getIncidentes(){
+export async function getIncidentes({ id_estado, id_centrotrabajo, id_subcentro } = {}){
     try {
-        const response = await axiosInstance.get("/v1/incidentes");
-        return { error: false, data: response.data.data };                
+        const params = {};
+        if (id_estado !== undefined && id_estado !== null) params.id_estado = id_estado;
+        if (id_centrotrabajo) params.id_centrotrabajo = id_centrotrabajo;
+        if (id_subcentro) params.id_subcentro = id_subcentro;
+
+        const response = await axiosInstance.get("/v1/incidentes", { params });
+        return { error: false, data: response.data.data};                
     } catch (error) {
         return { error: true, data: error.response?.data?.msg || "Error al obtener la lista de incidentes"};        
     }
-}
+}   
 
 export async function putStatusIncidente(id_incidente, estado){
     try {
@@ -18,6 +24,16 @@ export async function putStatusIncidente(id_incidente, estado){
     } catch (error) {
         return { error: true,  data: error.response?.data?.msg || "Error al actualizar el estado del incidente"};
         
+    }
+}
+
+export async function getStatus(){
+    try {
+        const response = await axiosInstance.get('/v1/incidentes/status');
+        console.log("status obtenidos en api: ", response.data.data)
+        return { error: false, data: response.data.data };        
+    } catch (error) {
+        return { error: true, data: error.response?.data?.msg || "Error al obtener el catalogo de status"};                
     }
 }
 

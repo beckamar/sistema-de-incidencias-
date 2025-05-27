@@ -11,7 +11,7 @@ const loginData = () => {
 
     const fetchSubmit = useCallback (async (selectedRol, selectedCentro, selectedSubcentros) => {
         try {
-            const {error:apiError, data } = await login(selectedRol);
+            const {error:apiError, data } = await login(selectedRol, selectedCentro, selectedSubcentros);
 
             if(apiError || !data?.userData){throw new Error (apiError ? data : "Estrcutura de respuesta invalida"); }
             return {success: true, userData: data.userData};

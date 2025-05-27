@@ -1,65 +1,62 @@
-import { useMemo, useState} from 'react';
-import sedeData from '../../hooks/admin/sedeData';
+import { useState} from 'react';
+import dashboardData from '../../hooks/admin/DashboardData';
 import { useNavigate } from 'react-router-dom';
-import incidentes from '../../hooks/incidente/useIncidentesData';
+import useIncidentesData from '../../hooks/incidente/useIncidentesData';
 
 const useDashboardIncidentes = () => {
 
-  const {centros, subcentros, fetchSubcentros} = sedeData();
+  const {centros, subcentros, fetchSubcentros, fetchSearchSubmit} = dashboardData();
+  const {listaStatus, statusError} = useIncidentesData();
   
   const [selectedCentro, setSelectedCentro] = useState(null);
   const [selectedSubcentro, setSelectedSubcentro] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const [listaIncidentes, setlistaIncidentes] = useState([]);
 
 
-
-    const handleCentroChange = (centroId) => {
-      const newValue = centroId === selectedCentro ? null : centroId;
+    const handleCentroChange = (id_centrotrabajo) => {
+      const newValue = id_centrotrabajo === selectedCentro ? null : id_centrotrabajo;
       setSelectedCentro(newValue);
       setSelectedSubcentro(null);
       setError(null);
       if (newValue) fetchSubcentros(newValue);
     };
 
-   const handleSubcentroChange = (subcentroId) => {
-      setSelectedSubcentro(subcentroId === selectedSubcentro ? null : subcentroId);
+   const handleSubcentroChange = (id_subcentro) => {
+      setSelectedSubcentro(id_subcentro === selectedSubcentro ? null : id_subcentro);
       setError(null);
    };
 
    const handleStatusChange =  (e) => {
-    setSelectedStatus(e.target.value);
+    const id_estado = e.target.value;
+    setSelectedStatus(id_estado !== "" ? parseInt(id_estado, 10) : null);
     setError(null);
    };
 
-   const statusOptions = [
-    {id: "true", nombre: " Resuelto"},
-    {id: "false",nombre: "Pendiente"}
-   ];
 
 
+   const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    setError(null);
+
+      try {
+        console.log("Parametros en handleSearchSUbmit: ", {id_estado: selectedStatus, id_centrotrabajo: selectedCentro,id_subcentro: selectedSubcentro })
+        const {error, data} = await fetchSearchSubmit({id_estado: selectedStatus, id_centrotrabajo: selectedCentro,id_subcentro: selectedSubcentro });
+        if(!error){
+          console.log("setListaIncidentes: ", data)
+          setlistaIncidentes(data);
+        }
+      } catch (error) {
+        setError(error.message);      
+    }
+   };
+
+ 
    const handleBackLogin = () => {
     navigate("/login")
   };
-
-
-  //Bajo analisis junto con variables pasadas por parametro en la funcion:listaIncidentes, selectedRol, selectedCentro, selectedSubcentro
-    /**const permisos = {
-        1: () => true,
-        2: ({ incidente, centro, subcentro}) =>
-          incidente.id_centrotrabajo == centro &&
-        (subcentro == null || incidente.id_subcentro == subcentro),
-      };
-
-      const filtradoDatos = useMemo(() => 
-        listaIncidentes.filter(incidente => 
-          permisos[selectedRol]?.({ incidente, centro: selectedCentro, subcentro: selectedSubcentro })
-        ),
-        [listaIncidentes, selectedRol, selectedCentro, selectedSubcentro]
-      );
-      */
-
 
 
     const showSubcentros = selectedCentro && subcentros.length > 0;
@@ -73,8 +70,11 @@ const useDashboardIncidentes = () => {
       handleCentroChange,
       handleSubcentroChange,
       handleBackLogin,
+      handleSearchSubmit,
+      listaIncidentes,
+      listaStatus,
       handleStatusChange,
-      statusOptions,
+      statusError,
 
       error
     };
