@@ -15,10 +15,10 @@ export async function getIncidentes({ id_estado, id_centrotrabajo, id_subcentro 
     }
 }   
 
-export async function putStatusIncidente(id_incidente, estado){
+export async function putStatusIncidente(id_incidente, id_estado){
     try {
         const response = await axiosInstance.put(`/v1/incidentes/${id_incidente}`,{
-            estado: estado
+            id_estado
         });
         return {error: false, data: response.data.data};
     } catch (error) {

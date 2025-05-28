@@ -12,6 +12,7 @@ export const getIncidentesService = async ({ id_estado, id_centrotrabajo, id_sub
         TO_CHAR(i.hora_reporte, 'HH24:MI') AS hora_reporte, 
         ct.id AS id_centrotrabajo,
         ct.nombre AS centro_trabajo, 
+        ce.id AS id_estado, 
         ce.nombre AS estado_incidente,
         COALESCE(ca.tipo, io.tipo, cv.nombre) AS subtipo, 
         COALESCE(ia.descripcion, io.descripcion, ive.descripcion) AS detalles, 
@@ -98,13 +99,7 @@ export const postIncidenteService = async (id_catalogoincidentes,id_centrotrabaj
 };
 
 
-export const putStatusIncidenteService = async (id_incidente, nombre_estado) =>  {
-
-    const estadoResult = await pool.query('SELECT id FROM catalogo_estado WHERE nombre = $1', [nombre_estado]);
-    if(estadoResult.rowCount === 0){
-        throw new Error('Estado no válido');
-    }
-    const id_estado = estadoResult.rows[0].id_estado;
+export const putStatusIncidenteService = async (id_incidente, id_estado) =>  {
 
     const result = await pool.query('UPDATE incidente SET id_estado = $1 WHERE id_incidente=$2 RETURNING *',[id_estado, id_incidente]);
     return result.rows[0];

@@ -1,4 +1,4 @@
-import { putStatusIncidenteService, getIncidenteIdService, getIncidentesService, getTiposIncidentesService, postIncidenteService, getStatusServices } from "../services/incidenteModel.js";
+import { putStatusIncidenteService,getIncidentesService, getTiposIncidentesService, postIncidenteService, getStatusServices } from "../services/incidenteModel.js";
 import handleResponse from '../middlewares/responseHandler.js';
 
 
@@ -23,7 +23,6 @@ export const postIncidente = async (req, res, next) => {
 
 export const getIncidentes = async (req, res, next) => {
     try{
-        console.log("Query params:", req.query); 
         const { id_estado, id_centrotrabajo, id_subcentro } = req.query;
         const incidentes = await getIncidentesService({id_estado, id_centrotrabajo, id_subcentro});
         handleResponse(res, 200, "Incidentes obtenidos",incidentes);
@@ -34,9 +33,10 @@ export const getIncidentes = async (req, res, next) => {
 
 
 export const putStatusIncidente = async (req, res, next) => {
-    const {estado} = req.body;
+    const {id_estado} = req.body;
     try {
-        const incidenteActualizado = await putStatusIncidenteService(req.params.id_incidente, estado);
+        console.log(`IncidenteController <putStatus> id_incidentes: ${req.params.id_incidente} id_estado: ${id_estado}` )
+        const incidenteActualizado = await putStatusIncidenteService(req.params.id_incidente, id_estado);
         if(!incidenteActualizado) return handleResponse(res, 404, "incidente no encontrado");
         handleResponse(res, 200, "Incidente actualizado", incidenteActualizado);
     } catch (error) {

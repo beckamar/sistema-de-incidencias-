@@ -6,8 +6,22 @@ import useIncidentesData from '../../hooks/incidente/useIncidentesData';
 
 
 const TablaIncidentes = ({listaIncidentes}) => {
-  const {updateStatus, isUpdatingStatus} = useIncidentesData();
+  const {listaStatus, updateStatus, isUpdatingStatus} = useIncidentesData();
 
+
+  const statusOptions = useMemo(
+    () =>
+      Array.isArray(listaStatus)
+        ? listaStatus.map((item) => ({
+            value: Number(item.id),
+            label: item.nombre,
+          }))
+        : [],
+    [listaStatus]
+    );
+
+  console.log("listaStatus:", listaStatus);
+    console.log("STATUSOPTIONS:", statusOptions);
 
 
   const columns = useMemo(() => [
@@ -44,21 +58,23 @@ const TablaIncidentes = ({listaIncidentes}) => {
       enableSorting: false,
     },
     {
-      accessorKey: 'estado_incidente',
+      accessorKey: 'id_estado',
       header: 'Status',
       editVariant: 'select',
-      editSelectOptions: [
-        { value: 'Pendiente', label: 'Pendiente' },
-        { value: 'Resuelto', label: 'Resuelto' },
-      ],
-      enableSorting: true,
+      editSelectOptions: statusOptions,
+      enableEditing: true,
+      enableSorting: false,
+      Cell: ({ cell }) => {
+        const option = statusOptions.find(opt => opt.value === cell.getValue());
+        return option ? option.label : cell.getValue();
+      }
     },
     {
       accessorKey: 'fecha_reporte',
       header: 'Fecha Reporte',
       Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY'),
       enableEditing: false,
-      enableSorting: true,
+      enableSorting: false,
     },
     {
       accessorKey: 'hora_reporte',
@@ -75,14 +91,19 @@ const TablaIncidentes = ({listaIncidentes}) => {
   ], []);
 
   const handleSaveRow = async ({ table, row, values }) => {
-    if (values.estado_incidente !== row.original.estado_incidente) {
-      const estado = values.estado_incidente === 'Resuelto';
-      const result = await updateStatus(row.original.id_incidente, estado);
-      row.original.estado_incidente = values.estado_incidente;
-      table.setSorting([{ id: 'estado_incidente', desc: false }]);
+    if (values.id_estado !== row.original.id_estado) {
+      await updateStatus(row.original.id_incidente, values.id_estado);
+      row.original.id_estado = values.id_estado;
+      table.setSorting([{ id: 'id_estado', desc: false }]);
 
     }
     table.setEditingRow(null); 
+  };
+
+  const statusColorMap = {
+    1: '#ffcdd2', // Pendiente (rojo)
+    2: 'white',   // En Proceso (blanco)
+    3: '#e8f5e9', // Resuelto (verde)
   };
 
 
@@ -105,13 +126,14 @@ const TablaIncidentes = ({listaIncidentes}) => {
         minHeight: '500px',
       },
     },
-    muiTableBodyCellProps: ({ cell }) => ({
-      sx: {
-        backgroundColor: cell.row.original.estado_incidente === 'Pendiente' 
-        ? '#ffcdd2' 
-        : '#e8f5e9',
+    muiTableBodyCellProps: ({ cell }) => {
+      const idEstado = cell.row.original.id_estado;
+      return {
+        sx: {
+          backgroundColor: statusColorMap[idEstado] || '',
         },
-    }),
+      };
+    },
     muiTablePaperProps: {
       sx: { 
         maxWidth: '100%',
