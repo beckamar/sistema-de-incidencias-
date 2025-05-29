@@ -28,6 +28,24 @@ const TablaIncidentes = ({listaIncidentes, setlistaIncidentes, listaStatus}) => 
     [listaIncidentes]
   );
 
+  const handleSaveRow = async ({ table, row, values }) => {
+    if (values.id_estado !== row.original.id_estado) {
+      await updateStatus(row.original.id_incidente, values.id_estado);
+      const nuevoEstado = listaStatus.find(e => e.id === values.id_estado)?.nombre || '';
+      setlistaIncidentes(prev => 
+        ordenarIncidentes(
+          prev.map(inc =>
+            inc.id_incidente === row.original.id_incidente
+              ? { ...inc, id_estado: values.id_estado, estado_incidente: nuevoEstado }
+              : inc
+          )
+        )
+      );
+    }
+    table.setEditingRow(null); 
+  };
+
+   //------------Columnas de la tabla------------ 
 
   const columns = useMemo(() => [
     
@@ -95,23 +113,6 @@ const TablaIncidentes = ({listaIncidentes, setlistaIncidentes, listaStatus}) => 
     },
   ],  [listaStatus]);
 
-const handleSaveRow = async ({ table, row, values }) => {
-  if (values.id_estado !== row.original.id_estado) {
-    await updateStatus(row.original.id_incidente, values.id_estado);
-    const nuevoEstado = listaStatus.find(e => e.id === values.id_estado)?.nombre || '';
-    setlistaIncidentes(prev => 
-      ordenarIncidentes(
-        prev.map(inc =>
-          inc.id_incidente === row.original.id_incidente
-            ? { ...inc, id_estado: values.id_estado, estado_incidente: nuevoEstado }
-            : inc
-        )
-      )
-    );
-  }
-  table.setEditingRow(null); 
-};
-
 
   const statusColorMap = {
     'Pendiente': ' #ffcdd2', 
@@ -119,6 +120,9 @@ const handleSaveRow = async ({ table, row, values }) => {
     'Resuelto': ' #e8f5e9',     
   };
 
+
+
+  //--------------Despliegue de la tabla----------
 
   const table = useMaterialReactTable({
     columns,
