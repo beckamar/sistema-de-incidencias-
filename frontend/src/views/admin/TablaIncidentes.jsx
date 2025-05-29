@@ -5,23 +5,8 @@ import useIncidentesData from '../../hooks/incidente/useIncidentesData';
 
 
 
-const TablaIncidentes = ({listaIncidentes}) => {
-  const {listaStatus, updateStatus, isUpdatingStatus} = useIncidentesData();
-
-
-  const statusOptions = useMemo(
-    () =>
-      Array.isArray(listaStatus)
-        ? listaStatus.map((item) => ({
-            value: Number(item.id),
-            label: item.nombre,
-          }))
-        : [],
-    [listaStatus]
-    );
-
-  console.log("listaStatus:", listaStatus);
-    console.log("STATUSOPTIONS:", statusOptions);
+const TablaIncidentes = ({listaIncidentes, listaStatus}) => {
+  const {updateStatus, isUpdatingStatus} = useIncidentesData();
 
 
   const columns = useMemo(() => [
@@ -57,24 +42,24 @@ const TablaIncidentes = ({listaIncidentes}) => {
       enableEditing: false,
       enableSorting: false,
     },
-    {
+      {
       accessorKey: 'id_estado',
       header: 'Status',
       editVariant: 'select',
-      editSelectOptions: statusOptions,
-      enableEditing: true,
+      editSelectOptions: listaStatus.map(e => ({ value: e.id, label: e.nombre })),
+      Cell: ({ cell, row }) => {
+      const idEstado = row.original.id_estado;
+      const estado = listaStatus.find(e => e.id === idEstado);
+      return estado ? estado.nombre : '';
+    },
       enableSorting: false,
-      Cell: ({ cell }) => {
-        const option = statusOptions.find(opt => opt.value === cell.getValue());
-        return option ? option.label : cell.getValue();
-      }
     },
     {
       accessorKey: 'fecha_reporte',
       header: 'Fecha Reporte',
       Cell: ({ cell }) => dayjs(cell.getValue()).format('DD/MM/YYYY'),
       enableEditing: false,
-      enableSorting: false,
+      enableSorting: true,
     },
     {
       accessorKey: 'hora_reporte',
@@ -88,22 +73,22 @@ const TablaIncidentes = ({listaIncidentes}) => {
       enableEditing: false,
       enableSorting: false,
     },
-  ], []);
+  ],  [listaStatus]);
 
   const handleSaveRow = async ({ table, row, values }) => {
     if (values.id_estado !== row.original.id_estado) {
       await updateStatus(row.original.id_incidente, values.id_estado);
       row.original.id_estado = values.id_estado;
+      row.original.estado_incidente = listaStatus.find(e => e.id === values.id_estado)?.nombre || '';
       table.setSorting([{ id: 'id_estado', desc: false }]);
-
     }
     table.setEditingRow(null); 
   };
 
   const statusColorMap = {
-    1: '#ffcdd2', // Pendiente (rojo)
-    2: 'white',   // En Proceso (blanco)
-    3: '#e8f5e9', // Resuelto (verde)
+    'Pendiente': '#ffcdd2', 
+    'En Proceso': 'white',    
+    'Resuelto': '#e8f5e9',     
   };
 
 
@@ -127,7 +112,7 @@ const TablaIncidentes = ({listaIncidentes}) => {
       },
     },
     muiTableBodyCellProps: ({ cell }) => {
-      const idEstado = cell.row.original.id_estado;
+      const idEstado = cell.row.original.estado_incidente;
       return {
         sx: {
           backgroundColor: statusColorMap[idEstado] || '',
@@ -156,3 +141,29 @@ const TablaIncidentes = ({listaIncidentes}) => {
 
 export default TablaIncidentes;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//No me juzguen, ya me quiero largar

@@ -34,8 +34,6 @@ export const DashboardIncidentes= ({
 
   return (
 
-
-
     <div className='min-h-screen h-screen overflow-y-auto flex flex-col'>
     <Header onBack={handleBackLogin} showBackButton={true} label="Gestión de incidencias"/>
 
@@ -82,7 +80,7 @@ export const DashboardIncidentes= ({
 
 
       <div className="flex-1 p-6">
-        <TablaIncidentes listaIncidentes={listaIncidentes}  />
+        <TablaIncidentes listaIncidentes={listaIncidentes} listaStatus={listaStatus} />
       </div>
     </div>
   </div>

@@ -100,8 +100,7 @@ export const postIncidenteService = async (id_catalogoincidentes,id_centrotrabaj
 
 
 export const putStatusIncidenteService = async (id_incidente, id_estado) =>  {
-
-    const result = await pool.query('UPDATE incidente SET id_estado = $1 WHERE id_incidente=$2 RETURNING *',[id_estado, id_incidente]);
+     const result = await pool.query('UPDATE incidente SET id_estado = $1 WHERE id_incidente=$2 RETURNING *',[id_estado, id_incidente]);
     return result.rows[0];
 };
 

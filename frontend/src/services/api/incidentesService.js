@@ -30,7 +30,6 @@ export async function putStatusIncidente(id_incidente, id_estado){
 export async function getStatus(){
     try {
         const response = await axiosInstance.get('/v1/incidentes/status');
-        console.log("status obtenidos en api: ", response.data.data)
         return { error: false, data: response.data.data };        
     } catch (error) {
         return { error: true, data: error.response?.data?.msg || "Error al obtener el catalogo de status"};                

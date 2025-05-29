@@ -42,10 +42,8 @@ const useDashboardIncidentes = () => {
     setError(null);
 
       try {
-        console.log("Parametros en handleSearchSUbmit: ", {id_estado: selectedStatus, id_centrotrabajo: selectedCentro,id_subcentro: selectedSubcentro })
         const {error, data} = await fetchSearchSubmit({id_estado: selectedStatus, id_centrotrabajo: selectedCentro,id_subcentro: selectedSubcentro });
         if(!error){
-          console.log("setListaIncidentes: ", data)
           setlistaIncidentes(data);
         }
       } catch (error) {
