@@ -22,6 +22,7 @@ export const DashboardIncidentes= ({
   listaStatus,
   handleSearchSubmit,
   listaIncidentes,
+  setlistaIncidentes,
   error,
 
 }) => {
@@ -80,7 +81,7 @@ export const DashboardIncidentes= ({
 
 
       <div className="flex-1 p-6">
-        <TablaIncidentes listaIncidentes={listaIncidentes} listaStatus={listaStatus} />
+        <TablaIncidentes listaIncidentes={listaIncidentes} setlistaIncidentes={setlistaIncidentes} listaStatus={listaStatus} />
       </div>
     </div>
   </div>
@@ -89,7 +90,7 @@ export const DashboardIncidentes= ({
 
 
 
-//resumen de todo, rpe, agregar estado en proceso, opcion de getAll -> StatusOPtions
+//resumen de todo, rpe, opcion de getAll -> StatusOPtions
 
 
 

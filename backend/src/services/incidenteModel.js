@@ -54,8 +54,7 @@ export const getIncidentesService = async ({ id_estado, id_centrotrabajo, id_sub
     }
 
     query += `
-        ORDER BY 
-        ce.nombre,
+    ORDER BY 
         CASE 
             WHEN ce.nombre = 'Pendiente' THEN 1
             WHEN ce.nombre = 'En Proceso' THEN 2

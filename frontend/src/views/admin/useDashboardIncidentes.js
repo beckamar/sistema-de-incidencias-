@@ -70,6 +70,7 @@ const useDashboardIncidentes = () => {
       handleBackLogin,
       handleSearchSubmit,
       listaIncidentes,
+      setlistaIncidentes,
       listaStatus,
       handleStatusChange,
       statusError,

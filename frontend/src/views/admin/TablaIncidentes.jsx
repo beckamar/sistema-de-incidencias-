@@ -5,8 +5,28 @@ import useIncidentesData from '../../hooks/incidente/useIncidentesData';
 
 
 
-const TablaIncidentes = ({listaIncidentes, listaStatus}) => {
+const TablaIncidentes = ({listaIncidentes, setlistaIncidentes, listaStatus}) => {
   const {updateStatus, isUpdatingStatus} = useIncidentesData();
+
+  const ordenarIncidentes = (incidentes) => {
+    const getStatusOrder = id_estado => {
+      if (id_estado === 1) return 0;
+      if (id_estado === 2) return 1;
+      if (id_estado === 3) return 2;
+      return 99;
+    };
+    return [...incidentes].sort((a, b) => {
+      const grupoA = getStatusOrder(a.id_estado);
+      const grupoB = getStatusOrder(b.id_estado);
+      if (grupoA !== grupoB) return grupoA - grupoB;
+      return a.id_incidente - b.id_incidente;
+    });
+  };
+
+  const dataOrdenada = useMemo(
+    () => ordenarIncidentes(Array.isArray(listaIncidentes) ? listaIncidentes : []),
+    [listaIncidentes]
+  );
 
 
   const columns = useMemo(() => [
@@ -75,26 +95,34 @@ const TablaIncidentes = ({listaIncidentes, listaStatus}) => {
     },
   ],  [listaStatus]);
 
-  const handleSaveRow = async ({ table, row, values }) => {
-    if (values.id_estado !== row.original.id_estado) {
-      await updateStatus(row.original.id_incidente, values.id_estado);
-      row.original.id_estado = values.id_estado;
-      row.original.estado_incidente = listaStatus.find(e => e.id === values.id_estado)?.nombre || '';
-      table.setSorting([{ id: 'id_estado', desc: false }]);
-    }
-    table.setEditingRow(null); 
-  };
+const handleSaveRow = async ({ table, row, values }) => {
+  if (values.id_estado !== row.original.id_estado) {
+    await updateStatus(row.original.id_incidente, values.id_estado);
+    const nuevoEstado = listaStatus.find(e => e.id === values.id_estado)?.nombre || '';
+    setlistaIncidentes(prev => 
+      ordenarIncidentes(
+        prev.map(inc =>
+          inc.id_incidente === row.original.id_incidente
+            ? { ...inc, id_estado: values.id_estado, estado_incidente: nuevoEstado }
+            : inc
+        )
+      )
+    );
+  }
+  table.setEditingRow(null); 
+};
+
 
   const statusColorMap = {
-    'Pendiente': '#ffcdd2', 
-    'En Proceso': 'white',    
-    'Resuelto': '#e8f5e9',     
+    'Pendiente': ' #ffcdd2', 
+    'En Proceso': 'rgb(217, 235, 248)',    
+    'Resuelto': ' #e8f5e9',     
   };
 
 
   const table = useMaterialReactTable({
     columns,
-    data: Array.isArray(listaIncidentes) ? listaIncidentes : [],    
+    data: dataOrdenada, 
     enableEditing: true,
     editDisplayMode: 'modal',     
     onEditingRowSave: handleSaveRow,
@@ -166,4 +194,4 @@ export default TablaIncidentes;
 
 
 
-//No me juzguen, ya me quiero largar
+//No me juzguen, ya me quiero largar. No me gusta programacion web
