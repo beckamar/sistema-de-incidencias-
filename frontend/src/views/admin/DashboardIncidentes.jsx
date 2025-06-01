@@ -8,6 +8,7 @@ import TablaIncidentes from './TablaIncidentes';
 import AnaliticaIncidentes from './AnaliticaIncidentes'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import {MdBarChart} from 'react-icons/md';
+import { Checkbox } from "@material-tailwind/react";
 
 
 
@@ -25,6 +26,8 @@ export const DashboardIncidentes= ({
   handleSearchSubmit,
   listaIncidentes,
   setlistaIncidentes,
+  deshabilitarFiltros,
+  handleToggleTodo,
   error,
 
 }) => {
@@ -61,10 +64,22 @@ export const DashboardIncidentes= ({
             className="bg-gray-50 shadow rounded-lg p-6 m-6 w-80 flex flex-col gap-6"
             onSubmit={handleSearchSubmit}
           >
+
+       
+            <Checkbox
+              label="Todo"
+              className="text-sm"
+              labelProps={{className: "text-sm text-gray-700 font-medium select-none" }}
+              checked={deshabilitarFiltros}
+              onChange={handleToggleTodo}
+            />
+
+          
             <Dropdown
               label="Status"
               options={listaStatus}
               onChange={handleStatusChange}
+              disabled={deshabilitarFiltros}
             />
             <CheckBoxFilter
               label="Centro de trabajo"
@@ -78,6 +93,7 @@ export const DashboardIncidentes= ({
                 options={subcentros}
                 selectedValue={selectedSubcentro}
                 onChange={handleSubcentroChange}
+                disabled={deshabilitarFiltros}
               />
             )}
             <ErrorMessage error={error} />
@@ -157,137 +173,4 @@ export const DashboardIncidentes= ({
 
 
 
-//resumen de todo, rpe, opcion de getAll -> StatusOPtions
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//resumen de todo, rpe, opcion de getAll -> StatusOPtion

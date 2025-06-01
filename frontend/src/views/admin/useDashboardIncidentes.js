@@ -11,6 +11,7 @@ const useDashboardIncidentes = () => {
   const [selectedCentro, setSelectedCentro] = useState(null);
   const [selectedSubcentro, setSelectedSubcentro] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState(null);
+  const [deshabilitarFiltros, setDeshabilitarFiltros] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [listaIncidentes, setlistaIncidentes] = useState([]);
@@ -34,6 +35,18 @@ const useDashboardIncidentes = () => {
     setSelectedStatus(id_estado !== "" ? parseInt(id_estado, 10) : null);
     setError(null);
    };
+
+    const handleToggleTodo = () => {
+      setDeshabilitarFiltros((prev) => {
+        const nuevoValor = !prev;
+        if (nuevoValor) {
+          setSelectedSubcentro(null);
+          setSelectedStatus(null);
+        }
+        return nuevoValor;
+      });
+    };
+
 
 
 
@@ -74,6 +87,10 @@ const useDashboardIncidentes = () => {
       listaStatus,
       handleStatusChange,
       statusError,
+
+      deshabilitarFiltros,
+      setDeshabilitarFiltros,
+      handleToggleTodo,
 
       error
     };

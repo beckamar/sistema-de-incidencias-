@@ -128,6 +128,7 @@ const TablaIncidentes = ({listaIncidentes, setlistaIncidentes, listaStatus}) => 
     columns,
     data: dataOrdenada, 
     enableEditing: true,
+    enableFullPagination: true,
     editDisplayMode: 'modal',     
     onEditingRowSave: handleSaveRow,
     localization: {
@@ -162,6 +163,12 @@ const TablaIncidentes = ({listaIncidentes, setlistaIncidentes, listaStatus}) => 
     state: {
       isLoading: isUpdatingStatus,
     },
+  initialState: {
+    pagination: {
+      pageSize: 10,
+      pageIndex: 0,
+    },
+  },
 
 
 

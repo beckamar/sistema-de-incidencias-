@@ -8,7 +8,10 @@ export async function getIncidentes({ id_estado, id_centrotrabajo, id_subcentro 
         if (id_centrotrabajo) params.id_centrotrabajo = id_centrotrabajo;
         if (id_subcentro) params.id_subcentro = id_subcentro;
 
+
         const response = await axiosInstance.get("/v1/incidentes", { params });
+        console.log("Lista incidentes ", response.data.data)
+
         return { error: false, data: response.data.data};                
     } catch (error) {
         return { error: true, data: error.response?.data?.msg || "Error al obtener la lista de incidentes"};        

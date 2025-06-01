@@ -22,14 +22,20 @@ export const postIncidente = async (req, res, next) => {
 };
 
 export const getIncidentes = async (req, res, next) => {
-    try{
-        const { id_estado, id_centrotrabajo, id_subcentro } = req.query;
-        const incidentes = await getIncidentesService({id_estado, id_centrotrabajo, id_subcentro});
-        handleResponse(res, 200, "Incidentes obtenidos",incidentes);
-    }catch(err){
+    try {
+        const toNull = v => v === undefined || v === "" ? null : v;
+        const params = {
+            id_estado: toNull(req.query.id_estado),
+            id_centrotrabajo: toNull(req.query.id_centrotrabajo),
+            id_subcentro: toNull(req.query.id_subcentro),
+        };
+        const incidentes = await getIncidentesService(params);
+        handleResponse(res, 200, "Incidentes obtenidos", incidentes);
+    } catch (err) {
         next(err);
     }
 };
+
 
 
 export const putStatusIncidente = async (req, res, next) => {

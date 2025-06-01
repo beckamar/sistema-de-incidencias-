@@ -2,7 +2,7 @@ import pool from "../database/db.js";
 
 
 export const getIncidentesService = async ({ id_estado, id_centrotrabajo, id_subcentro }) => {
-    let query = `
+    const query = `
     SELECT 
         i.id_incidente, 
         ci.tipo AS tipo_incidente, 
@@ -32,38 +32,25 @@ export const getIncidentesService = async ({ id_estado, id_centrotrabajo, id_sub
     LEFT JOIN incidente_vehiculoeh ive ON i.id_incidente = ive.id_incidente
     LEFT JOIN categorias_vehiculoeh cv ON ive.id_categoria = cv.id
     JOIN catalogo_estados ce ON i.id_estado = ce.id
-    WHERE 1=1
-    `;
-
-    const values = [];
-    let count = 1;
-
-    if (id_estado !== undefined) {
-        query += ` AND ce.id = $${count++}`;
-        values.push(Number(id_estado));
-    }
-
-    if (id_centrotrabajo) {
-        query += ` AND i.id_centrotrabajo = $${count++}`;
-        values.push(Number(id_centrotrabajo));
-    }
-
-    if (id_subcentro) {
-        query += ` AND i.id_subcentro = $${count++}`;
-        values.push(Number(id_subcentro));
-    }
-
-    query += `
+    WHERE 
+        ($1::int IS NULL OR ce.id = $1)
+        AND ($2::int IS NULL OR i.id_centrotrabajo = $2)
+        AND ($3::int IS NULL OR i.id_subcentro = $3)
     ORDER BY 
         CASE 
             WHEN ce.nombre = 'Pendiente' THEN 1
             WHEN ce.nombre = 'En Proceso' THEN 2
             WHEN ce.nombre = 'Resuelto' THEN 3
         END,
-
         i.fecha_reporte ASC,
         i.hora_reporte ASC;
     `;
+
+    const values = [
+        id_estado ? Number(id_estado) : null,
+        id_centrotrabajo ? Number(id_centrotrabajo) : null,
+        id_subcentro ? Number(id_subcentro) : null,
+    ];
 
     const result = await pool.query(query, values);
     return result.rows;
@@ -96,6 +83,7 @@ export const postIncidenteService = async (id_catalogoincidentes,id_centrotrabaj
         client.release();
     }
 };
+
 
 
 export const putStatusIncidenteService = async (id_incidente, id_estado) =>  {

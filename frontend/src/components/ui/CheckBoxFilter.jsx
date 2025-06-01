@@ -1,8 +1,8 @@
 import React from 'react';
 
-const CheckBoxFilter = ({ options, selectedValue, onChange, label }) => {
+const CheckBoxFilter = ({ options, selectedValue, onChange, label, disabled = false }) => {
   return (
-    <div className="flex flex-col min-w-min max-h-[80vh] overflow-y-auto border rounded-lg">
+    <div className={`flex flex-col min-w-min max-h-[80vh] overflow-y-auto border rounded-lg ${disabled ? 'opacity-60 pointer-events-none' : ''}`}>
       {label && (
         <div className="text-sm font-medium mb-1 sticky top-0 bg-white py-1 z-10">
           {label}
@@ -25,6 +25,7 @@ const CheckBoxFilter = ({ options, selectedValue, onChange, label }) => {
                 }
               }}
               className="form-checkbox text-blue-600 w-4 h-4"
+              disabled={disabled}
             />
             <span className="text-sm truncate">{item.nombre}</span>
           </label>
