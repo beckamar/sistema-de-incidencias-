@@ -3,47 +3,57 @@ import pool from "../database/db.js";
 
 export const getIncidentesService = async ({ id_estado, id_centrotrabajo, id_subcentro }) => {
     const query = `
-    SELECT 
-        i.id_incidente, 
-        ci.tipo AS tipo_incidente, 
-        sc.id AS id_subcentro,
-        sc.nombre AS subcentro, 
-        TO_CHAR(i.fecha_reporte, 'YYYY-MM-DD') AS fecha_reporte,
-        TO_CHAR(i.hora_reporte, 'HH24:MI') AS hora_reporte, 
-        ct.id AS id_centrotrabajo,
-        ct.nombre AS centro_trabajo, 
-        ce.id AS id_estado, 
-        ce.nombre AS estado_incidente,
-        COALESCE(ca.tipo, io.tipo, cv.nombre) AS subtipo, 
-        COALESCE(ia.descripcion, io.descripcion, ive.descripcion) AS detalles, 
-        CASE 
-            WHEN ia.id_ausencia IS NOT NULL THEN e.nombre_completo 
-            WHEN ive.id IS NOT NULL THEN ive.clave
-            ELSE NULL 
-        END AS afectado
-    FROM incidente i 
-    JOIN catalogo_incidentes ci ON i.id_catalogoincidentes = ci.id_catincidentes 
-    LEFT JOIN subcentro_trabajo sc ON i.id_subcentro = sc.id 
-    JOIN centro_trabajo ct ON i.id_centrotrabajo = ct.id 
-    LEFT JOIN incidente_ausencia ia ON i.id_incidente = ia.id_incidente 
-    LEFT JOIN empleado e ON ia.id_empleado = e.id_empleado 
-    LEFT JOIN catalogo_ausencias ca ON ia.id_catausencias = ca.id_ausencia 
-    LEFT JOIN incidente_otro io ON i.id_incidente = io.id_incidente
-    LEFT JOIN incidente_vehiculoeh ive ON i.id_incidente = ive.id_incidente
-    LEFT JOIN categorias_vehiculoeh cv ON ive.id_categoria = cv.id
-    JOIN catalogo_estados ce ON i.id_estado = ce.id
+    WITH incidentes_filtrados AS (
+        SELECT 
+            i.id_incidente, 
+            ci.tipo AS tipo_incidente, 
+            sc.id AS id_subcentro,
+            sc.nombre AS subcentro, 
+            TO_CHAR(i.fecha_reporte, 'YYYY-MM-DD') AS fecha_reporte,
+            TO_CHAR(i.hora_reporte, 'HH24:MI') AS hora_reporte, 
+            ct.id AS id_centrotrabajo,
+            ct.nombre AS centro_trabajo, 
+            ce.id AS id_estado, 
+            ce.nombre AS estado_incidente,
+            COALESCE(ca.tipo, io.tipo, cv.nombre) AS subtipo, 
+            COALESCE(ia.descripcion, io.descripcion, ive.descripcion) AS detalles, 
+            CASE 
+                WHEN ia.id_ausencia IS NOT NULL THEN e.nombre_completo 
+                WHEN ive.id IS NOT NULL THEN ive.clave
+                ELSE NULL 
+            END AS afectado,
+            ROW_NUMBER() OVER (
+                PARTITION BY ce.nombre 
+                ORDER BY i.fecha_reporte DESC, i.hora_reporte DESC
+            ) AS rn
+        FROM incidente i 
+        JOIN catalogo_incidentes ci ON i.id_catalogoincidentes = ci.id_catincidentes 
+        LEFT JOIN subcentro_trabajo sc ON i.id_subcentro = sc.id 
+        JOIN centro_trabajo ct ON i.id_centrotrabajo = ct.id 
+        LEFT JOIN incidente_ausencia ia ON i.id_incidente = ia.id_incidente 
+        LEFT JOIN empleado e ON ia.id_empleado = e.id_empleado 
+        LEFT JOIN catalogo_ausencias ca ON ia.id_catausencias = ca.id_ausencia 
+        LEFT JOIN incidente_otro io ON i.id_incidente = io.id_incidente
+        LEFT JOIN incidente_vehiculoeh ive ON i.id_incidente = ive.id_incidente
+        LEFT JOIN categorias_vehiculoeh cv ON ive.id_categoria = cv.id
+        JOIN catalogo_estados ce ON i.id_estado = ce.id
+        WHERE 
+            ($1::int IS NULL OR ce.id = $1)
+            AND ($2::int IS NULL OR i.id_centrotrabajo = $2)
+            AND ($3::int IS NULL OR i.id_subcentro = $3)
+    )
+    SELECT *
+    FROM incidentes_filtrados
     WHERE 
-        ($1::int IS NULL OR ce.id = $1)
-        AND ($2::int IS NULL OR i.id_centrotrabajo = $2)
-        AND ($3::int IS NULL OR i.id_subcentro = $3)
+        estado_incidente != 'Resuelto' OR rn <= 50
     ORDER BY 
         CASE 
-            WHEN ce.nombre = 'Pendiente' THEN 1
-            WHEN ce.nombre = 'En Proceso' THEN 2
-            WHEN ce.nombre = 'Resuelto' THEN 3
+            WHEN estado_incidente = 'Pendiente' THEN 1
+            WHEN estado_incidente = 'En Proceso' THEN 2
+            WHEN estado_incidente = 'Resuelto' THEN 3
         END,
-        i.fecha_reporte ASC,
-        i.hora_reporte ASC;
+        fecha_reporte ASC,
+        hora_reporte ASC;
     `;
 
     const values = [
