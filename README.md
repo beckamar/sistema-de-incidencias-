@@ -40,10 +40,25 @@ Configura en backend/.env:
 - Notificaciones (requiere configuración de Firebase)
 - Estadísticas
 
+## 📸 Diagrama bd
+- ![Ingreso](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/diagramaBD.png) 
+
+
 ## 📸 Interfaz Gráfica
 
-| Vista | Captura |
-|-------|---------|
-| **Ingreso** | ![Ingreso](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/ingreso.png) |
-| **Dashboard Admin** | ![Dashboard Admin](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/adminDashboard.png) |
-| **Reporte incidente** | ![Reporte incidente](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/inicioReporte.png) |
+### Ingreso
+- ![Ingreso](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/ingreso.png) 
+
+### Dashboard Admin
+- ![Vista general](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/adminDashboard.png)
+- ![Tabla](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/adminTabla.png)
+- ![Reporte incidente](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/adminIncidente.png)
+- ![Resumen](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/adminResumen.png)
+
+### Reporte incidente
+
+-  ![Reporte incidente](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/inicioReporte.png)
+-  ![Envio reporte](https://raw.githubusercontent.com/beckamar/sistema-de-incidencias-/main/screenshots/envioReporte.png)
+
+-  
+
