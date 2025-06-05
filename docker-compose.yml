@@ -12,16 +12,16 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./backup.dump:/docker-entrypoint-initdb.d/backup.dump  
 
   api:
-    build:
-      context: .
+    build: .  
     ports:
       - "5001:5001"
     env_file:
-      - ./backend/.env
+      - ./backend/.env 
     depends_on:
       - db
 
 volumes:
-  pgdata:
+  pgdata: 
